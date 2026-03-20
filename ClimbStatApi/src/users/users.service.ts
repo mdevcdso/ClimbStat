@@ -21,12 +21,20 @@ export class UsersService {
             throw new Error('Email already in use');
         }
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+        var userRole = createUserDto.role || UserRole.USER;
+
+        const userCount = await this.userModel.countDocuments();
+        if(userCount === 0) {
+            userRole = UserRole.ADMIN;
+        }
+
         const newUser = new this.userModel({
             ...createUserDto,
             password: hashedPassword,
-            role: createUserDto.role || UserRole.USER
+            role: userRole
         });
-
+        
+        
         return newUser.save();
     }
 
