@@ -1,17 +1,40 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { ClimbingGymDto } from "./dto/climbingGym.dto";
 import { ClimbingGymService } from "./climbingGym.service";
 import { Roles } from "src/auth/decorators/roles.decorator";
 import { UserRole } from "src/users/enums/user-role.enum";
 import { UpdateClimbingGymDto } from "./dto/updateClimbingGym.dto";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { BoulderDto } from "src/boulder/dto/boulder.dto";
+import { BoulderService } from "src/boulder/boulder.service";
 
 
 @Controller('climbingGym')
 export class ClimbingGymController {
     constructor(
-        private climbingGymService: ClimbingGymService
+        private climbingGymService: ClimbingGymService,
+        private boulderService: BoulderService
     ){}
+
+    @Get(":gym_id/boulder")
+    @UseGuards(JwtAuthGuard)
+    async getBoulders(@Param('gym_id') gymId: string){
+        return this.boulderService.getBouldersByGymId(gymId)
+    }
+
+    @Roles(UserRole.ADMIN)
+    @Post(':gym_id/boulder')
+    @UseGuards(JwtAuthGuard)
+    @UseInterceptors(FileInterceptor('image'))
+    async createBoulder(
+        @Body() boulderDto: BoulderDto,
+        @UploadedFile() file: Express.Multer.File,
+        @Param('gym_id') gymId: string
+    ) {
+        if(!file) throw new BadRequestException('Image file is required');
+        return this.boulderService.createBoulder(boulderDto, file, gymId);
+    }
 
     @Get(':id')
     @UseGuards(JwtAuthGuard)

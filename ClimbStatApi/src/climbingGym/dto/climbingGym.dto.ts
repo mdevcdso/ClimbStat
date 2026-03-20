@@ -9,15 +9,15 @@ export class ClimbingGymDto {
     @IsNotEmpty()
     location: string
 
-     @IsString()
-     @IsNotEmpty()
-     openingHours: string
+    @IsString()
+    @IsNotEmpty()
+    openingHours: string
 
-     @IsString()
-     @IsOptional()
-     franchise: string
+    @IsString()
+    @IsOptional()
+    franchise: string
 
-     @IsString()
-     @IsNotEmpty()
-     cotationType: string
+    @IsString()
+    @IsNotEmpty()
+    cotationType: string
 }
