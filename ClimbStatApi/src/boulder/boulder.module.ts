@@ -4,14 +4,18 @@ import { Boulder, BoulderSchema } from "./shemas/boulder.shema";
 import { BoulderController } from "./boulder.controller";
 import { BoulderService } from "./boulder.service";
 import { UploadModule } from "src/upload/upload.module";
+import { Topo, TopoSchema } from "src/topo/schema/topo.shema";
+import { TopoModule } from "src/topo/topo.module";
 
 
 @Module({
     imports: [
         MongooseModule.forFeature([
-            {name: Boulder.name, schema: BoulderSchema}
+            {name: Boulder.name, schema: BoulderSchema},
+            {name: Topo.name, schema: TopoSchema}
         ]),
-        UploadModule
+        UploadModule,
+        TopoModule
     ],
     controllers: [BoulderController],
     providers: [BoulderService],

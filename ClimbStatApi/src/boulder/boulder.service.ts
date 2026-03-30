@@ -52,7 +52,7 @@ export class BoulderService{
         if(file){
             const boulder = await this.boulderModel.findById(id);
             if (boulder?.image) {
-                const oldPath = `./uploads/${boulder.image.split('/uploads/')[1]}`;
+                const oldPath = `./uploads//${boulder.image.split('/uploads/')[1]}`;
                 if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
             }
             image = `${process.env.APP_URL}/uploads/${file.filename}`;
