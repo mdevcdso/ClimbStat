@@ -6,15 +6,21 @@ import { UpdateBoulderDto } from "./dto/updateBoulder.dto";
 import { NotFoundError } from "rxjs";
 import * as fs from 'fs';
 import { BoulderDto } from "./dto/boulder.dto";
+import { ClimbingGym } from "src/climbingGym/shemas/climbingGym.shema";
 
 
 @Injectable()
 export class BoulderService{
     constructor(
-        @InjectModel(Boulder.name) private boulderModel: Model<Boulder>
+        @InjectModel(Boulder.name) private boulderModel: Model<Boulder>,
+        @InjectModel(ClimbingGym.name) private gymModel: Model<ClimbingGym>
     ){}
 
     async createBoulder(boulderDto: BoulderDto, file: Express.Multer.File, gymId: string){
+        const gym = await this.gymModel.findById(gymId).exec()
+        if(!gym){
+            throw new NotFoundException('Climbing gym not found')
+        }
         const imageUrl = `${process.env.APP_URL}/uploads/${file.filename}`;
 
         const createdBoulder = new this.boulderModel({
@@ -26,6 +32,10 @@ export class BoulderService{
     }
 
     async getBouldersByGymId(gymId: string){
+        const gym = await this.gymModel.findById(gymId).exec()
+        if(!gym){
+            throw new NotFoundException('Climbing gym not found')
+        }
         if(gymId.length !== 24){
             throw new NotFoundException('Invalid climbing gym ID')
         }

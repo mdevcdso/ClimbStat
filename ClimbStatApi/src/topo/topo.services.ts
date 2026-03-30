@@ -16,7 +16,7 @@ export class TopoService{
         if(idBoulder.length !== 24){
             throw new BadRequestException('Invalid boulder ID')
         }
-        const existingBoulder = this.boulderModel.findById(idBoulder).exec()
+        const existingBoulder = await this.boulderModel.findById(idBoulder).exec()
         if(!existingBoulder){
             throw new BadRequestException('Boulder not found')
         }

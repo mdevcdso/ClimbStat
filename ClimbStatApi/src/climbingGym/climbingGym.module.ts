@@ -12,10 +12,11 @@ import { BoulderModule } from "src/boulder/boulder.module";
 @Module({
     imports: [
         MongooseModule.forFeature([
-            {name: ClimbingGym.name, schema: ClimbingGymSchema}
+            {name: ClimbingGym.name, schema: ClimbingGymSchema},
+            {name: Boulder.name, schema: BoulderSchema}
         ]),
         UploadModule,
-        BoulderModule,
+        BoulderModule
     ],
     controllers: [ClimbingGymController],
     providers: [ClimbingGymService],
