@@ -8,6 +8,7 @@ import { UpdateClimbingGymDto } from "./dto/updateClimbingGym.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { BoulderDto } from "src/boulder/dto/boulder.dto";
 import { BoulderService } from "src/boulder/boulder.service";
+import { ApiBody } from "@nestjs/swagger";
 
 
 @Controller('climbingGym')
@@ -25,6 +26,7 @@ export class ClimbingGymController {
 
     @Roles(UserRole.ADMIN)
     @Post(':gym_id/boulder')
+    @ApiBody({ type: BoulderDto })
     @UseGuards(JwtAuthGuard)
     @UseInterceptors(FileInterceptor('image'))
     async createBoulder(
@@ -51,6 +53,7 @@ export class ClimbingGymController {
 
     @Roles(UserRole.ADMIN)
     @Post()
+    @ApiBody({ type: ClimbingGymDto })
     @UseGuards(JwtAuthGuard)
     async createClimbingGym(@Body() climbingGymDto: ClimbingGymDto){
         return this.climbingGymService.createClimbingGym(climbingGymDto)

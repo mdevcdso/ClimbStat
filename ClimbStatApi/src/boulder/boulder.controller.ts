@@ -7,6 +7,7 @@ import { Roles } from "src/auth/decorators/roles.decorator";
 import { UserRole } from "src/users/enums/user-role.enum";
 import { TopoService } from "src/topo/topo.services";
 import { TopoDto } from "src/topo/dto/topo.dto";
+import { ApiBody } from "@nestjs/swagger";
 
 
 @Controller('boulder')
@@ -18,6 +19,7 @@ export class BoulderController{
 
     @Post(':boulderId/topo')
     @UseGuards(JwtAuthGuard)
+    @ApiBody({ type: TopoDto })
     async createTopo( 
         @Param('boulderId') boulderId: string, 
         @Body() topoDto: TopoDto, 
