@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -79,17 +80,8 @@ fun MainContent(viewModels: AppViewModels, startDestination: String) {
     ClimbStatTheme {
         Surface(
             modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFFFFFFF),
-                            Color(0xFFFFFFFF),
-                            Color(0xFF00E3FF),
-                        )
-                    )
-                ),
-            color = Color.Transparent
+                .fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
         ) {
             Box(
                 contentAlignment = Alignment.BottomCenter

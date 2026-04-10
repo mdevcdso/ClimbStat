@@ -37,4 +37,8 @@ class AuthViewModel(
             _authStateUi.value = result
         }
     }
+
+    fun resetUiState() {
+        _authStateUi.value = AuthStateUi.Initial
+    }
 }

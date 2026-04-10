@@ -1,9 +1,12 @@
 package com.example.climbstat.presentation.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,6 +40,7 @@ fun LoginScreen(
     viewModel: AuthViewModel,
     navController: NavController
 ) {
+    val context = LocalContext.current
 
     val authStateUi = viewModel.authStateUi.collectAsState()
     var userEmail by remember { mutableStateOf("") }
@@ -52,7 +58,8 @@ fun LoginScreen(
                 CircularProgressIndicator(modifier = Modifier.size(40.dp))
             }
             is AuthStateUi.Error -> {
-                Text(text = "Error: ${(authStateUi.value as AuthStateUi.Error).message}")
+                Toast.makeText(context, "Erreur lors de la connexion à ClimbStat +", Toast.LENGTH_LONG).show()
+                viewModel.resetUiState()
             }
             is AuthStateUi.Success -> {
                 navController.navigate(Screen.Home.route) {
@@ -62,68 +69,76 @@ fun LoginScreen(
             is AuthStateUi.Initial -> {
                 Column(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .weight(1f),
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Bienvenue sur ClimbStat + !",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Leader mondial dans le suivi de performances en escalade",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Pour commencer, connectez vous à votre compte",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .weight(2f),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    OutlinedTextField(
-                        value = userEmail,
-                        onValueChange = { userEmail = it },
-                        label = {
-                            Text(
-                                text = "Email",
-                                modifier = Modifier.fillMaxWidth(),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        },
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 4.dp)
-                    )
-                    OutlinedTextField(
-                        value = userPassword,
-                        onValueChange = { userPassword = it },
-                        label = {
-                            Text(
-                                text = "Mot de passe",
-                                modifier = Modifier.fillMaxWidth(),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        },
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 4.dp)
-                    )
-                    Box(
+                    Column (
+                        modifier = Modifier,
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Bienvenue sur ClimbStat+ !!",
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Leader mondial dans le suivi de performances en escalade",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Pour commencer, connectez vous à votre compte",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
+
+                    Column(
                         modifier = Modifier
                             .padding(16.dp)
-                            .weight(1f)
+                            .weight(1f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        OutlinedTextField(
+                            value = userEmail,
+                            onValueChange = { userEmail = it },
+                            label = {
+                                Text(
+                                    text = "Email",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                        )
+                        OutlinedTextField(
+                            value = userPassword,
+                            onValueChange = { userPassword = it },
+                            label = {
+                                Text(
+                                    text = "Mot de passe",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            },
+                            singleLine = true,
+                            visualTransformation = PasswordVisualTransformation(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                        )
+                    }
+                    Column (
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Button(
                             modifier = Modifier,
@@ -134,12 +149,37 @@ fun LoginScreen(
                             Text(
                                 text = "Connection",
                                 fontSize = 20.sp,
-                                color = MaterialTheme.colorScheme.tertiary
+                                color = MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                             )
                         }
+                        Row (
+
+                        ){
+                            Text(
+                                text = "Pas de compte ? ",
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .padding(top = 16.dp),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Text(
+                                text = "Inscrivez vous !",
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .padding(top = 16.dp)
+                                    .clickable{
+                                        //navController.navigate(Screen.Register.route)
+                                    },
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+
+
                     }
                 }
-
             }
 
         }
