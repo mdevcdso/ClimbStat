@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.climbstat.data.datasource.remote.RemoteUserDataSource
 import com.example.climbstat.data.remote.ClimbStatApiAuthService
 import com.example.climbstat.data.remote.ClimbStatApiClient
@@ -28,6 +30,7 @@ import com.example.climbstat.domain.usecase.RegisterUseCase
 import com.example.climbstat.domain.usecase.state.AuthStateUi
 import com.example.climbstat.presentation.ui.navigation.AppNavigation
 import com.example.climbstat.presentation.ui.navigation.Screen
+import com.example.climbstat.presentation.ui.navigation.composable.BottomNavigationBar
 import com.example.climbstat.presentation.ui.screen.LoginScreen
 import com.example.climbstat.presentation.ui.theme.ClimbStatTheme
 import com.example.climbstat.presentation.viewModel.AppViewModels
@@ -42,11 +45,11 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var appViewModels: AppViewModels
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         val tokenManager = TokenManagerUtils(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         appViewModels = injectDependencies(tokenManager)
 
 
@@ -78,15 +81,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainContent(viewModels: AppViewModels, startDestination: String) {
     ClimbStatTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
+        val navController: NavHostController = rememberNavController()
+        Scaffold(
+            bottomBar = {
+                BottomNavigationBar(navController)
+            }
+        ) { innerPadding ->
             Box(
-                contentAlignment = Alignment.BottomCenter
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
             ) {
-                AppNavigation(viewModels, startDestination)
+                AppNavigation(viewModels, startDestination, navController)
             }
         }
     }

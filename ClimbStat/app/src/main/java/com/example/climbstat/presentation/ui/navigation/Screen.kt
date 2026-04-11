@@ -1,7 +1,47 @@
 package com.example.climbstat.presentation.ui.navigation
 
-sealed class Screen(val route: String) {
-    object Login: Screen("login")
-    object Home: Screen("home")
-    object Register: Screen("register")
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.climbstat.R
+
+sealed class Screen(
+    val route: String,
+    val label: String,
+    val icon: Int
+) {
+    object Login: Screen(
+        route = "login",
+        label = "Login",
+        icon = R.drawable.ic_launcher_foreground
+    )
+    object Register: Screen(
+        route = "register",
+        label = "Register",
+        icon = R.drawable.ic_launcher_foreground
+    )
+    object Home: Screen(
+        route = "home",
+        label = "Home",
+        icon = R.drawable.home_svgrepo_com
+    )
+    object Profile: Screen(
+        route = "profile",
+        label = "Profile",
+        icon = R.drawable.profile_svgrepo_com
+    )
+    object Gym: Screen(
+        route = "gym",
+        label = "Salle",
+        icon = R.drawable.buildings_svgrepo_com
+    )
+    object Boulder: Screen(
+        route = "boulder",
+        label = "Blocs",
+        icon = R.drawable.picture_frame_svgrepo_com
+    )
+    object Topo: Screen(
+        route = "topo",
+        label = "Topo",
+        icon = R.drawable.goal_mountain_flag_achievement_svgrepo_com
+    )
+
 }
