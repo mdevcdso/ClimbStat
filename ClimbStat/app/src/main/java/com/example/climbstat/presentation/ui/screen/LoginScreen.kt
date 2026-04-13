@@ -1,10 +1,8 @@
 package com.example.climbstat.presentation.ui.screen
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,7 +29,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.climbstat.domain.usecase.state.AuthStateUi
+import com.example.climbstat.domain.usecase.state.AuthUiState
 import com.example.climbstat.presentation.ui.navigation.Screen
 import com.example.climbstat.presentation.viewModel.AuthViewModel
 
@@ -54,19 +52,19 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when(authStateUi.value){
-            is AuthStateUi.Loading -> {
+            is AuthUiState.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.size(40.dp))
             }
-            is AuthStateUi.Error -> {
+            is AuthUiState.Error -> {
                 Toast.makeText(context, "Erreur lors de la connexion à ClimbStat +", Toast.LENGTH_LONG).show()
                 viewModel.resetUiState()
             }
-            is AuthStateUi.Success -> {
+            is AuthUiState.Success -> {
                 navController.navigate(Screen.Home.route) {
                     popUpTo(Screen.Login.route) { inclusive = true }
                 }
             }
-            is AuthStateUi.Initial -> {
+            is AuthUiState.Initial -> {
                 Column(
                     modifier = Modifier
                         .padding(16.dp),
