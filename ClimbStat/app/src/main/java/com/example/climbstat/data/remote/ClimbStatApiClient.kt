@@ -25,4 +25,13 @@ object ClimbStatApiClient {
             .create(ClimbStatApiAuthService::class.java)
     }
 
+    val gymApiService: ClimbStatApiGymService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ClimbStatApiGymService::class.java)
+    }
+
 }
