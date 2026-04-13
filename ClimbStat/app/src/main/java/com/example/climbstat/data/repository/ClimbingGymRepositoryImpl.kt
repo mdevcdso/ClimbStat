@@ -1,5 +1,6 @@
 package com.example.climbstat.data.repository
 
+import android.util.Log
 import com.example.climbstat.data.datasource.remote.RemoteClimbingGymDataSource
 import com.example.climbstat.data.remote.climbingGym.toDomainModel
 import com.example.climbstat.domain.model.ClimbingGym
@@ -13,6 +14,7 @@ class ClimbingGymRepositoryImpl(
     val userToken: String = tokenManager.getToken().toString()
 
     override suspend fun fetchClimbingGyms(): Result<List<ClimbingGym>> {
+        //Log.e("TestClimbingGym", "UserToke : $userToken")
         val fetchResult = remote.getClimbingGyms(userToken)
         return if (fetchResult.isSuccess) {
             val climbingGyms = fetchResult.getOrThrow()

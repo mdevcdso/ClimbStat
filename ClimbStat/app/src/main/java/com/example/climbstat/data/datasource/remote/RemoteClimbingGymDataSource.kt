@@ -11,7 +11,7 @@ class RemoteClimbingGymDataSource(
     suspend fun getClimbingGyms(userToken: String): Result<List<ClimbingGym>> {
         return try {
             val response = this.apiService.fetchClimbingGyms(
-                userToken = userToken
+                userToken = "Bearer $userToken"
             )
             Result.success(
                 response.map{

@@ -1,24 +1,21 @@
 package com.example.climbstat.presentation.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.climbstat.presentation.ui.screen.BoulderScreen
 import com.example.climbstat.presentation.ui.screen.GymScreen
 import com.example.climbstat.presentation.ui.screen.HomeScreen
 import com.example.climbstat.presentation.ui.screen.LoginScreen
 import com.example.climbstat.presentation.ui.screen.ProfileScreen
 import com.example.climbstat.presentation.ui.screen.TopoScreen
-import com.example.climbstat.presentation.viewModel.AppViewModels
-import com.example.climbstat.presentation.viewModel.AuthViewModel
+import com.example.climbstat.presentation.viewModel.AppViewModel
 
 
 @Composable
 fun AppNavigation(
-    viewModels: AppViewModels,
+    viewModels: AppViewModel,
     startDestination: String = Screen.Login.route,
     navController: NavHostController
 ) {
@@ -36,7 +33,7 @@ fun AppNavigation(
             ProfileScreen()
         }
         composable(route = Screen.Gym.route) {
-            GymScreen()
+            GymScreen(viewModel = viewModels.climbingGymsViewModel, navController = navController)
         }
         composable(route = Screen.Boulder.route) {
             BoulderScreen()
