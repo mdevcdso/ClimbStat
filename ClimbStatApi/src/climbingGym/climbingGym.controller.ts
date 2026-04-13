@@ -55,8 +55,13 @@ export class ClimbingGymController {
     @Post()
     @ApiBody({ type: ClimbingGymDto })
     @UseGuards(JwtAuthGuard)
-    async createClimbingGym(@Body() climbingGymDto: ClimbingGymDto){
-        return this.climbingGymService.createClimbingGym(climbingGymDto)
+    @UseInterceptors(FileInterceptor('image'))
+    async createClimbingGym(
+        @Body() climbingGymDto: ClimbingGymDto,
+        @UploadedFile() file: Express.Multer.File
+    ){
+        if(!file) throw new BadRequestException('Image file is required');
+        return this.climbingGymService.createClimbingGym(climbingGymDto, file);
     }
 
     @Get()

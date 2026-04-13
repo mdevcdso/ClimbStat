@@ -13,12 +13,17 @@ export class ClimbingGymService {
         @InjectModel(ClimbingGym.name) private climbingGymModel: Model<ClimbingGym>
     ){}
 
-    async createClimbingGym(ClimbingGymDto: ClimbingGymDto){
+    async createClimbingGym(ClimbingGymDto: ClimbingGymDto, file: Express.Multer.File){
         const existingClimbingGym = await this.climbingGymModel.findOne({name: ClimbingGymDto.name}).exec()
         if(existingClimbingGym){
             throw new BadRequestException('A climbing gym with this name already exists')
         }
-        const createdClimbingGym = new this.climbingGymModel(ClimbingGymDto)
+        const imageUrl = `${process.env.APP_URL}/uploads/${file.filename}`;
+
+        const createdClimbingGym = new this.climbingGymModel({
+            ...ClimbingGymDto,
+            image: imageUrl,
+        })
         return createdClimbingGym.save()
     }
 

@@ -16,6 +16,10 @@ export class ClimbingGym {
 
     @Prop({required: true})
     cotationType: string
+
+    @Prop({required: true})
+    image: string;
+
 }
 
 export const ClimbingGymSchema = SchemaFactory.createForClass(ClimbingGym)
