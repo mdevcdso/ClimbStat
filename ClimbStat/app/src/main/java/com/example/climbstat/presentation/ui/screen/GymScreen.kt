@@ -36,6 +36,7 @@ import com.example.climbstat.domain.usecase.state.ClimbingGymsUiState
 import com.example.climbstat.presentation.ui.components.ClimbingGymListComponent
 import com.example.climbstat.presentation.ui.components.HeaderComponent
 import com.example.climbstat.presentation.ui.components.OnErrorComponent
+import com.example.climbstat.presentation.ui.navigation.Screen
 import com.example.climbstat.presentation.viewModel.AppViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymViewModel
 import com.example.climbstat.utils.PointerInputUtils
@@ -114,7 +115,8 @@ fun GymScreen(
                         ClimbingGymListComponent(
                             modifier = Modifier.fillMaxSize(),
                             climbingGyms = gyms.filter { it.name.contains(searchQuery.value, ignoreCase = true) },
-                            onGymClick = {
+                            onGymClick = { gymId ->
+                                navController.navigate(Screen.GymDetail.createRoute(gymId))
                             },
                             resetEmptySelection = {
                                 searchQuery.value = ""

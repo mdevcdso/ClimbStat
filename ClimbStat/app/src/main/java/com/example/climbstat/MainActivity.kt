@@ -18,6 +18,7 @@ import com.example.climbstat.data.remote.ClimbStatApiClient
 import com.example.climbstat.data.repository.AuthRepositoryImpl
 import com.example.climbstat.data.repository.ClimbingGymRepositoryImpl
 import com.example.climbstat.domain.repository.ClimbingGymRepository
+import com.example.climbstat.domain.usecase.FetchClimbingGymByIdUseCase
 import com.example.climbstat.domain.usecase.FetchClimbingGymUseCase
 import com.example.climbstat.domain.usecase.LoginUseCase
 import com.example.climbstat.domain.usecase.RegisterUseCase
@@ -27,6 +28,7 @@ import com.example.climbstat.presentation.ui.navigation.composable.BottomNavigat
 import com.example.climbstat.presentation.ui.theme.ClimbStatTheme
 import com.example.climbstat.presentation.viewModel.AppViewModel
 import com.example.climbstat.presentation.viewModel.AuthViewModel
+import com.example.climbstat.presentation.viewModel.ClimbingGymDetailViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymViewModel
 import com.example.climbstat.utils.TokenManagerUtils
 
@@ -35,6 +37,7 @@ class MainActivity : ComponentActivity() {
     lateinit var loginUseCase: LoginUseCase
     lateinit var registerUseCase: RegisterUseCase
     lateinit var fetchClimbingGymsUseCase: FetchClimbingGymUseCase
+    lateinit var fetchClimbingGymsByIdUseCase: FetchClimbingGymByIdUseCase
 
     private lateinit var appViewModels: AppViewModel
 
@@ -70,10 +73,12 @@ class MainActivity : ComponentActivity() {
         loginUseCase = LoginUseCase(authRepository)
         registerUseCase = RegisterUseCase(authRepository)
         fetchClimbingGymsUseCase = FetchClimbingGymUseCase(climbingGymRepository)
+        fetchClimbingGymsByIdUseCase = FetchClimbingGymByIdUseCase(climbingGymRepository)
 
         return AppViewModel(
             authViewModel = AuthViewModel(loginUseCase, registerUseCase),
-            climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase)
+            climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase),
+            climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase)
         )
     }
 }

@@ -14,7 +14,6 @@ class ClimbingGymRepositoryImpl(
     val userToken: String = tokenManager.getToken().toString()
 
     override suspend fun fetchClimbingGyms(): Result<List<ClimbingGym>> {
-        //Log.e("TestClimbingGym", "UserToke : $userToken")
         val fetchResult = remote.getClimbingGyms(userToken)
         return if (fetchResult.isSuccess) {
             val climbingGyms = fetchResult.getOrThrow()

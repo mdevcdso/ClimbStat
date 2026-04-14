@@ -33,6 +33,13 @@ sealed class Screen(
         label = "Salle",
         icon = R.drawable.buildings_svgrepo_com
     )
+    object GymDetail: Screen(
+        route = "gymDetail/{gymId}",
+        label = "Salle",
+        icon = R.drawable.buildings_svgrepo_com
+    ){
+        fun createRoute(gymId: String) = "gymDetail/$gymId"
+    }
     object Boulder: Screen(
         route = "boulder",
         label = "Blocs",
