@@ -3,7 +3,7 @@ import { Schema as MongooseSchema } from "mongoose";
 import { BoulderType } from "../enums/boulder-type.enum";
 
 
-@Schema()
+@Schema({timestamps: true})
 export class Boulder{
     
     @Prop({required: true})
