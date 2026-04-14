@@ -1,5 +1,6 @@
 package com.example.climbstat.data.remote.climbingGym
 
+import com.example.climbstat.Constants
 import com.example.climbstat.domain.model.ClimbingGym
 import com.google.gson.annotations.SerializedName
 
@@ -21,7 +22,7 @@ fun ClimbingGymDto.toDomainModel(): ClimbingGym = ClimbingGym(
     cotationType = this.cotationType,
     createdAt = this.createdAt,
     franchise = this.franchise,
-    image = this.image,
+    image = this.image.replace("localhost", Constants.IMAGE_BASE_URL),
     location = this.location,
     name = this.name,
     openingHours = this.openingHours,

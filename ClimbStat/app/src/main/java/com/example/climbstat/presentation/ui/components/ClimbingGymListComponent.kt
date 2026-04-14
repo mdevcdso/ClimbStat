@@ -1,5 +1,6 @@
 package com.example.climbstat.presentation.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.climbstat.R
 import com.example.climbstat.domain.model.ClimbingGym
 
@@ -29,11 +31,13 @@ fun ClimbingGymListComponent(
     climbingGyms: List<ClimbingGym>,
     onGymClick: (String) -> Unit
 ) {
+
     LazyColumn(
         modifier = modifier
     ) {
         items(climbingGyms.size) { index ->
             val climbingGym = climbingGyms[index]
+            Log.e("testImg", climbingGym.image)
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -41,10 +45,12 @@ fun ClimbingGymListComponent(
                 onClick = { onGymClick(climbingGym.id) }
             ) {
                 Column {
-                    Image(
-                        painter = painterResource(R.drawable.ic_launcher_background),
-                        contentDescription = "Image de la salle d'escalade",
+                    AsyncImage(
+                        model = climbingGym.image,
+                        contentDescription = "Image de la salle d'escalade ${climbingGym.name}",
                         contentScale = ContentScale.Crop,
+                        placeholder = painterResource(R.drawable.ic_launcher_background),
+                        error = painterResource(R.drawable.ic_launcher_background),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(150.dp)
