@@ -1,16 +1,13 @@
-package com.example.climbstat.presentation.ui.components
+package com.example.climbstat.presentation.ui.components.ClimbingGymComponents
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.climbstat.R
 import com.example.climbstat.domain.model.ClimbingGym
+import com.example.climbstat.presentation.ui.components.OnEmptySelectionComponent
 
 @Composable
 fun ClimbingGymListComponent(
@@ -45,20 +43,23 @@ fun ClimbingGymListComponent(
         ) {
             items(climbingGyms.size) { index ->
                 val climbingGym = climbingGyms[index]
-                Log.e("testImg", climbingGym.image)
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    onClick = { onGymClick(climbingGym.id) }
+                    onClick = {
+                        Log.e("ClimbingGymDetailViewModel", climbingGym.name)
+                        onGymClick(climbingGym.id)
+                    }
                 ) {
                     Column {
                         AsyncImage(
                             model = climbingGym.image,
                             contentDescription = "Image de la salle d'escalade ${climbingGym.name}",
                             contentScale = ContentScale.Crop,
-                            placeholder = painterResource(R.drawable.ic_launcher_background),
-                            error = painterResource(R.drawable.ic_launcher_background),
+                            placeholder = painterResource(R.drawable.crags_svgrepo_com),
+                            error = painterResource(R.drawable.crags_svgrepo_com),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(150.dp)

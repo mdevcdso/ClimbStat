@@ -23,6 +23,7 @@ class ClimbingGymDetailViewModel(
         _climbingGymDetailUiState.value = ClimbingGymDetailUiState.Loading
         viewModelScope.launch {
             val result = fetchClimbingGymByIdUseCase(id);
+            Log.d("ClimbingGymDetailViewModel", "fetchClimbingGymInfo: result = $result")
             _climbingGymDetailUiState.value = result
         }
     }

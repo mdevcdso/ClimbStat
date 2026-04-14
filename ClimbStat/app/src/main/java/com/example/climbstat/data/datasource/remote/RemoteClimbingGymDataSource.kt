@@ -1,5 +1,6 @@
 package com.example.climbstat.data.datasource.remote
 
+import android.util.Log
 import com.example.climbstat.data.remote.ClimbStatApiGymService
 import com.example.climbstat.data.remote.climbingGym.ClimbingGymDto
 import com.example.climbstat.data.remote.climbingGym.toDomainModel
@@ -26,7 +27,7 @@ class RemoteClimbingGymDataSource(
     suspend fun getClimbingGymById(userToken: String, id: String): Result<ClimbingGym> {
         return try {
             val response = this.apiService.fetchClimbingGymById(
-                userToken = userToken,
+                userToken = "Bearer $userToken",
                 id = id
             )
             Result.success(response.toDomainModel())
