@@ -11,11 +11,28 @@ export class ClimbingGymDto {
 
     @IsString()
     @IsNotEmpty()
+    address: string
+
+    @IsString()
+    @IsNotEmpty()
     openingHours: string
+
+    @IsString()
+    @IsNotEmpty()
+    clossingHours: string
+
+    @IsString()
+    @IsNotEmpty()
+    description: string
 
     @IsString()
     @IsOptional()
     franchise: string
+
+    @IsArray()
+    @ArrayNotEmpty()
+    @IsString({each: true})
+    tags: string[]
 
     @IsString()
     @IsNotEmpty()

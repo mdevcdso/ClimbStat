@@ -9,10 +9,22 @@ export class ClimbingGym {
     location: string
 
     @Prop({required: true})
+    address: string
+
+    @Prop({required: true})
     openingHours: string
+
+    @Prop({required: true})
+    clossingHours: string
+
+    @Prop({required: true})
+    description: string
 
     @Prop({required: false})
     franchise: string
+
+    @Prop({required: true})
+    tags: string[]
 
     @Prop({required: true})
     cotationType: string
