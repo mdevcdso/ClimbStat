@@ -29,68 +29,77 @@ import com.example.climbstat.domain.model.ClimbingGym
 fun ClimbingGymListComponent(
     modifier: Modifier,
     climbingGyms: List<ClimbingGym>,
-    onGymClick: (String) -> Unit
+    onGymClick: (String) -> Unit,
+    resetEmptySelection: () -> Unit
 ) {
-
-    LazyColumn(
-        modifier = modifier
-    ) {
-        items(climbingGyms.size) { index ->
-            val climbingGym = climbingGyms[index]
-            Log.e("testImg", climbingGym.image)
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                onClick = { onGymClick(climbingGym.id) }
-            ) {
-                Column {
-                    AsyncImage(
-                        model = climbingGym.image,
-                        contentDescription = "Image de la salle d'escalade ${climbingGym.name}",
-                        contentScale = ContentScale.Crop,
-                        placeholder = painterResource(R.drawable.ic_launcher_background),
-                        error = painterResource(R.drawable.ic_launcher_background),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(150.dp)
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = climbingGym.name,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+    if(climbingGyms.isEmpty()) {
+        OnEmptySelectionComponent(
+            message = "Aucune salle d'escalade trouvée",
+            resetSelection = {
+                resetEmptySelection()
+            }
+        )
+    }else {
+        LazyColumn(
+            modifier = modifier
+        ) {
+            items(climbingGyms.size) { index ->
+                val climbingGym = climbingGyms[index]
+                Log.e("testImg", climbingGym.image)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    onClick = { onGymClick(climbingGym.id) }
+                ) {
+                    Column {
+                        AsyncImage(
+                            model = climbingGym.image,
+                            contentDescription = "Image de la salle d'escalade ${climbingGym.name}",
+                            contentScale = ContentScale.Crop,
+                            placeholder = painterResource(R.drawable.ic_launcher_background),
+                            error = painterResource(R.drawable.ic_launcher_background),
                             modifier = Modifier
-                                .weight(1f)
+                                .fillMaxWidth()
+                                .height(150.dp)
                         )
-                        Column(
+                        Row(
                             modifier = Modifier
-                                .weight(1f),
-                            horizontalAlignment = Alignment.End
-                        ){
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Text(
-                                text = climbingGym.location,
-                                fontSize = 16.sp,
-                                lineHeight = 14.sp,
+                                text = climbingGym.name,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier
-                                    //.weight(1f)
+                                    .weight(1f)
                             )
-                            Text(
-                                text = climbingGym.openingHours,
-                                fontSize = 14.sp,
-                                lineHeight = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            Column(
                                 modifier = Modifier
+                                    .weight(1f),
+                                horizontalAlignment = Alignment.End
+                            ) {
+                                Text(
+                                    text = climbingGym.location,
+                                    fontSize = 16.sp,
+                                    lineHeight = 14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier
                                     //.weight(1f)
-                            )
+                                )
+                                Text(
+                                    text = climbingGym.openingHours,
+                                    fontSize = 14.sp,
+                                    lineHeight = 14.sp,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier
+                                    //.weight(1f)
+                                )
+                            }
                         }
                     }
                 }

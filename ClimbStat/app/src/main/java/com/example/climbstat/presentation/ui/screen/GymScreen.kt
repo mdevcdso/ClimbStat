@@ -50,7 +50,7 @@ fun GymScreen(
     val climbingGymStateUi = viewModel.climbingGymUiState.collectAsState()
 
     var refreshScrollState = remember { mutableStateOf(false) }
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery = remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         if(climbingGymStateUi.value is ClimbingGymsUiState.Success) return@LaunchedEffect
@@ -80,8 +80,8 @@ fun GymScreen(
             onclick = {}
         )
         OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
+            value = searchQuery.value,
+            onValueChange = { searchQuery.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
@@ -103,12 +103,8 @@ fun GymScreen(
             is ClimbingGymsUiState.Success -> {
                 val gyms = (climbingGymStateUi.value as ClimbingGymsUiState.Success).climbingGyms
                 if(gyms.isEmpty()){
-                    Text(
-                        text = "Aucune salle trouvée",
-                        fontSize = 18.sp,
-                        color = Color.Gray,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
+                    ClimbingGymListComponent(
+                        message = "Malheuresement, aucune salle d'escalade trouvée"
                     )
                 } else {
                     Box(
@@ -117,8 +113,11 @@ fun GymScreen(
                     ) {
                         ClimbingGymListComponent(
                             modifier = Modifier.fillMaxSize(),
-                            climbingGyms = gyms.filter { it.name.contains(searchQuery, ignoreCase = true) },
+                            climbingGyms = gyms.filter { it.name.contains(searchQuery.value, ignoreCase = true) },
                             onGymClick = {
+                            },
+                            resetEmptySelection = {
+                                searchQuery.value = ""
                             }
                         )
                         if (refreshScrollState.value) {

@@ -2,11 +2,11 @@ package com.example.climbstat.presentation.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,48 +20,28 @@ import androidx.compose.ui.unit.sp
 import com.example.climbstat.R
 
 @Composable
-fun OnErrorComponent(
+fun ClimbingGymListComponent(
     message: String,
-    errorMessage: String,
-    onRetry: () -> Unit
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier.padding(8.dp)
         ) {
             Text(
-                text = "Erreur lors du chargement des Données",
+                text = message,
                 modifier = Modifier.padding(8.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = message,
+                text = "Aucune donnée à afficher",
                 modifier = Modifier.padding(top = 8.dp, bottom = 2.dp, start = 8.dp, end = 8.dp),
                 fontSize = 16.sp
             )
-            Text(
-                text = errorMessage,
-                modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
-                fontSize = 16.sp
-            )
-            Button(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                onClick = {
-                    onRetry()
-                }
-            ) {
-                Text(
-                    text = "Actualiser les données",
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
         }
         Icon(
             painter = painterResource(id = R.drawable.crags_svgrepo_com),
