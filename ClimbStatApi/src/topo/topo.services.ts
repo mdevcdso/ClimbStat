@@ -50,7 +50,7 @@ export class TopoService{
             {idBoulder}).
             populate(
                 'idUser',
-                '_id username'
+                '_id name'
             )
         .exec()
         return topos
