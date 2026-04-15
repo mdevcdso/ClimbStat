@@ -148,8 +148,8 @@ fun BoulderScreen(
                         modifier = Modifier
                             .padding(top = 16.dp),
                         boulders = boulders,
-                        onBoulderClick = { gymId ->
-                            navController.navigate(Screen.BoulderDetail.createRoute(gymId))
+                        onBoulderClick = { gymId, index->
+                            navController.navigate(Screen.BoulderDetail.createRoute(gymId, index))
                         }
                     )
                     if (isSelectDown.value) {

@@ -59,10 +59,19 @@ fun AppNavigation(
         }
         composable(
             route = Screen.BoulderDetail.route,
-            arguments = listOf(navArgument("gymId") { type = NavType.StringType })
+            arguments = listOf(
+                navArgument("gymId") { type = NavType.StringType },
+                navArgument("boulderIndex") { type = NavType.IntType }
+            )
         ) {
             val gymId = it.arguments?.getString("gymId") ?: ""
-            BoulderDetailsScreen(viewModel = viewModels.boulderDetailsViewModel, navController = navController, gymId = gymId)
+            val boulderIndex = it.arguments?.getInt("boulderIndex") ?: 0
+            BoulderDetailsScreen(
+                viewModel = viewModels.boulderDetailsViewModel,
+                navController = navController,
+                gymId = gymId,
+                boulderIndex = boulderIndex
+            )
         }
         composable(route = Screen.Topo.route) {
             TopoScreen()

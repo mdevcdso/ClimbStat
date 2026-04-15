@@ -31,7 +31,7 @@ import com.example.climbstat.domain.model.Boulder
 fun BoulderListComponent(
     modifier: Modifier,
     boulders: List<Boulder>,
-    onBoulderClick: (String) -> Unit
+    onBoulderClick: (String, Int) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -43,7 +43,7 @@ fun BoulderListComponent(
                     .fillMaxWidth()
                     .clickable(
                         onClick = {
-                            onBoulderClick(boulder.id)
+                            onBoulderClick(boulder.idGym, index)
                         }
                     )
             ) {
