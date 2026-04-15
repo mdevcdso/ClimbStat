@@ -1,6 +1,7 @@
 package com.example.climbstat.data.remote
 
 import com.example.climbstat.data.remote.topo.AddTopoRequest
+import com.example.climbstat.data.remote.topo.AddTopoResponse
 import com.example.climbstat.data.remote.topo.TopoDto
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,5 +26,5 @@ interface ClimbStatApiTopoService {
         @Header("Authorization") userToken: String,
         @Path("boulderId") boulderId: String,
         @Body body: AddTopoRequest
-    ): TopoDto
+    ): AddTopoResponse
 }
