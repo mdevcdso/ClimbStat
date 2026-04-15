@@ -66,7 +66,8 @@ fun BoulderListComponent(
                             text = (index + 1).toString(),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 8.dp)
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant
                         )
                         AsyncImage(
                             model = boulder.image,

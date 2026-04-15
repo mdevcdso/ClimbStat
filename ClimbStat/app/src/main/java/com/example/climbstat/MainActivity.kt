@@ -32,6 +32,7 @@ import com.example.climbstat.presentation.ui.navigation.composable.BottomNavigat
 import com.example.climbstat.presentation.ui.theme.ClimbStatTheme
 import com.example.climbstat.presentation.viewModel.AppViewModel
 import com.example.climbstat.presentation.viewModel.AuthViewModel
+import com.example.climbstat.presentation.viewModel.BoulderDetailsViewModel
 import com.example.climbstat.presentation.viewModel.BoulderViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymDetailViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymViewModel
@@ -92,7 +93,8 @@ class MainActivity : ComponentActivity() {
             authViewModel = AuthViewModel(loginUseCase, registerUseCase),
             climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase),
             climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase),
-            boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase)
+            boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase),
+            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase)
         )
     }
 }

@@ -43,6 +43,7 @@ import com.example.climbstat.presentation.ui.components.HeaderComponent
 import com.example.climbstat.presentation.ui.components.OnErrorComponent
 import com.example.climbstat.presentation.ui.components.boulderComponents.BoulderListComponent
 import com.example.climbstat.presentation.ui.components.boulderComponents.ClimbingGymListComponents
+import com.example.climbstat.presentation.ui.navigation.Screen
 import com.example.climbstat.presentation.viewModel.BoulderViewModel
 import com.example.climbstat.utils.PointerInputUtils
 
@@ -122,7 +123,8 @@ fun BoulderScreen(
                             modifier = Modifier,
                             maxLines = 1,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 25.sp
+                            fontSize = 25.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_swap_vert_24),
@@ -146,8 +148,8 @@ fun BoulderScreen(
                         modifier = Modifier
                             .padding(top = 16.dp),
                         boulders = boulders,
-                        onBoulderClick = { boulderId ->
-
+                        onBoulderClick = { gymId ->
+                            navController.navigate(Screen.BoulderDetail.createRoute(gymId))
                         }
                     )
                     if (isSelectDown.value) {

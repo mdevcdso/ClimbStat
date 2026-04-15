@@ -1,6 +1,5 @@
 package com.example.climbstat.presentation.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.climbstat.domain.model.ClimbingGym
@@ -28,7 +27,7 @@ class BoulderViewModel(
     val selectedGym: StateFlow<ClimbingGym?> = _selectedGym.asStateFlow()
 
 
-     fun fetchBoulderInfo(id: String){
+     fun fetchBoulders(id: String){
         _boulderUiState.value = BoulderUiState.Loading
          viewModelScope.launch {
             val result = fetchBoulderUseCase(id)
@@ -46,13 +45,13 @@ class BoulderViewModel(
             if(gymResult is ClimbingGymsUiState.Success){
                 if(gymId != null){
                     _selectedGym.value = gymResult.climbingGyms.firstOrNull { it.id == gymId }
-                    fetchBoulderInfo(gymId)
+                    fetchBoulders(gymId)
                     return@launch
                 }
                 val climbingGym = gymResult.climbingGyms.firstOrNull()
                 _selectedGym.value = climbingGym
                 if(climbingGym != null){
-                    fetchBoulderInfo(climbingGym.id)
+                    fetchBoulders(climbingGym.id)
                 } else {
                     _boulderUiState.value = BoulderUiState.Error("Climbing gym not found")
                 }

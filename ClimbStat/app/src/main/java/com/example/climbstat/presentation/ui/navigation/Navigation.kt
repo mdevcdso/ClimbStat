@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.climbstat.presentation.ui.screen.BoulderDetailsScreen
 import com.example.climbstat.presentation.ui.screen.BoulderScreen
 import com.example.climbstat.presentation.ui.screen.GymDetailScreen
 import com.example.climbstat.presentation.ui.screen.GymScreen
@@ -14,6 +15,7 @@ import com.example.climbstat.presentation.ui.screen.LoginScreen
 import com.example.climbstat.presentation.ui.screen.ProfileScreen
 import com.example.climbstat.presentation.ui.screen.TopoScreen
 import com.example.climbstat.presentation.viewModel.AppViewModel
+import com.example.climbstat.presentation.viewModel.BoulderDetailsViewModel
 
 
 @Composable
@@ -54,6 +56,13 @@ fun AppNavigation(
         ) {
             val gymId = it.arguments?.getString("gymId")
             BoulderScreen(viewModel = viewModels.boulderViewModel, gymId = gymId, navController = navController)
+        }
+        composable(
+            route = Screen.BoulderDetail.route,
+            arguments = listOf(navArgument("gymId") { type = NavType.StringType })
+        ) {
+            val gymId = it.arguments?.getString("gymId") ?: ""
+            BoulderDetailsScreen(viewModel = viewModels.boulderDetailsViewModel, navController = navController, gymId = gymId)
         }
         composable(route = Screen.Topo.route) {
             TopoScreen()
