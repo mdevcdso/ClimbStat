@@ -16,9 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.climbstat.domain.model.Boulder
 import com.example.climbstat.domain.usecase.state.BoulderUiState
 import com.example.climbstat.domain.usecase.state.ClimbingGymsUiState
 import com.example.climbstat.presentation.ui.components.OnErrorComponent
+import com.example.climbstat.presentation.ui.components.boulderComponents.BoulderDetailComponent
 import com.example.climbstat.presentation.viewModel.BoulderDetailsViewModel
 import com.example.climbstat.presentation.viewModel.BoulderViewModel
 
@@ -58,7 +60,18 @@ fun BoulderDetailsScreen(
                 modifier = Modifier.fillMaxSize()
             ) { page ->
                 var boulder = boulders[page]
-                Text(text = boulder.id)
+                BoulderDetailComponent(
+                    boulder = boulder,
+                    onExitClick = {
+                        navController.popBackStack()
+                    },
+                    onFlashClick = {
+
+                    },
+                    onTopClick = {
+
+                    }
+                )
             }
         }
         is BoulderUiState.Error -> {
