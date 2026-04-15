@@ -21,6 +21,7 @@ import com.example.climbstat.data.repository.BoulderRepositoryImpl
 import com.example.climbstat.data.repository.ClimbingGymRepositoryImpl
 import com.example.climbstat.domain.repository.BoulderRepository
 import com.example.climbstat.domain.repository.ClimbingGymRepository
+import com.example.climbstat.domain.usecase.FetchBoulderToposUseCase
 import com.example.climbstat.domain.usecase.FetchBoulderUseCase
 import com.example.climbstat.domain.usecase.FetchClimbingGymByIdUseCase
 import com.example.climbstat.domain.usecase.FetchClimbingGymUseCase
@@ -45,6 +46,7 @@ class MainActivity : ComponentActivity() {
     lateinit var fetchClimbingGymsUseCase: FetchClimbingGymUseCase
     lateinit var fetchClimbingGymsByIdUseCase: FetchClimbingGymByIdUseCase
     lateinit var fetchBoulderUseCase: FetchBoulderUseCase
+    lateinit var fetchBoulderToposUseCase: FetchBoulderToposUseCase
 
     private lateinit var appViewModels: AppViewModel
 
@@ -83,18 +85,25 @@ class MainActivity : ComponentActivity() {
             ),
             tokenManager = tokenManager
         )
+        val topoRepository = com.example.climbstat.data.repository.TopoRepositoryImpl(
+            remote = com.example.climbstat.data.datasource.remote.RemoteTopoDataSource(
+                ClimbStatApiClient.topoApiService
+            ),
+            tokenManager = tokenManager
+        )
         loginUseCase = LoginUseCase(authRepository)
         registerUseCase = RegisterUseCase(authRepository)
         fetchClimbingGymsUseCase = FetchClimbingGymUseCase(climbingGymRepository)
         fetchClimbingGymsByIdUseCase = FetchClimbingGymByIdUseCase(climbingGymRepository)
         fetchBoulderUseCase = FetchBoulderUseCase(boulderRepository)
+        fetchBoulderToposUseCase = FetchBoulderToposUseCase(topoRepository)
 
         return AppViewModel(
             authViewModel = AuthViewModel(loginUseCase, registerUseCase),
             climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase),
             climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase),
             boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase),
-            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase)
+            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase, fetchBoulderToposUseCase)
         )
     }
 }

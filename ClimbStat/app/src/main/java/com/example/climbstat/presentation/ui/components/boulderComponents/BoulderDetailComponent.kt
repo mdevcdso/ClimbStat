@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,9 +31,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.climbstat.R
 import com.example.climbstat.domain.model.Boulder
+import com.example.climbstat.domain.model.Topo
+import com.example.climbstat.domain.usecase.state.ToposUiState
+import com.example.climbstat.presentation.ui.components.toposComponents.BoulderToposListComponent
 
 @Composable
 fun BoulderDetailComponent(
+    toposUiState: ToposUiState,
     boulder: Boulder,
     onExitClick: () -> Unit,
     onFlashClick: (String) -> Unit,
@@ -70,6 +75,7 @@ fun BoulderDetailComponent(
                 ) {
                     Text(
                         text = "Difficulté",
+                        color = MaterialTheme.colorScheme.outlineVariant,
                         fontSize = 16.sp,
                         lineHeight = 16.sp
                     )
@@ -88,6 +94,7 @@ fun BoulderDetailComponent(
                 ) {
                     Text(
                         text = "Ouvert le",
+                        color = MaterialTheme.colorScheme.outlineVariant,
                         fontSize = 16.sp,
                         lineHeight = 16.sp
                     )
@@ -146,18 +153,61 @@ fun BoulderDetailComponent(
                 )
             }
 
-            Text(
+            Column(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth(),
-                text = boulder.description,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Start
-            )
+            ){
+                Text(
+                    text = "Description",
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                    fontSize = 16.sp,
+                    lineHeight = 16.sp
+                )
+                Text(
+                    modifier = Modifier,
+                    text = boulder.description,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Start
+                )
+            }
 
-
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 16.dp, ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.podium_svgrepo_com),
+                        contentDescription = "Icone de classement",
+                        tint = MaterialTheme.colorScheme.outlineVariant,
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Text(
+                        text = "Classement",
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                }
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    thickness = 2.dp,
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
+                BoulderToposListComponent(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    toposUiState = toposUiState
+                )
+            }
         }
         Icon(
             painter = painterResource(id = R.drawable.cross_round_svgrepo_com),

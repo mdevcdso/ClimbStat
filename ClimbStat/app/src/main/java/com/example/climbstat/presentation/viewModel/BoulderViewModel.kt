@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class BoulderViewModel(
     val fetchBoulderUseCase: FetchBoulderUseCase,
-    val fetchClimbingGymUseCase: FetchClimbingGymUseCase
+    val fetchClimbingGymUseCase: FetchClimbingGymUseCase,
 ): ViewModel(){
 
     private val _boulderUiState = MutableStateFlow<BoulderUiState>(BoulderUiState.Loading)

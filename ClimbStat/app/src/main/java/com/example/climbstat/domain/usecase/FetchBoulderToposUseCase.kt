@@ -1,8 +1,9 @@
-package com.example.climbstat.domain.usecase.state
+package com.example.climbstat.domain.usecase
 
 import com.example.climbstat.domain.repository.TopoRepository
+import com.example.climbstat.domain.usecase.state.ToposUiState
 
-class FetchBoulderTopos(
+class FetchBoulderToposUseCase(
     val repository: TopoRepository
 ){
     suspend operator fun invoke(boulderId: String): ToposUiState {

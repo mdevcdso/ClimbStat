@@ -43,4 +43,13 @@ object ClimbStatApiClient {
             .create(ClimStatApiBoulderService::class.java)
     }
 
+    val topoApiService: ClimbStatApiTopoService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ClimbStatApiTopoService::class.java)
+    }
+
 }

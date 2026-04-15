@@ -23,6 +23,7 @@ import com.example.climbstat.presentation.ui.components.OnErrorComponent
 import com.example.climbstat.presentation.ui.components.boulderComponents.BoulderDetailComponent
 import com.example.climbstat.presentation.viewModel.BoulderDetailsViewModel
 import com.example.climbstat.presentation.viewModel.BoulderViewModel
+import kotlin.text.get
 
 @Composable
 fun BoulderDetailsScreen(
@@ -32,6 +33,8 @@ fun BoulderDetailsScreen(
     boulderIndex: Int
 ) {
     val boulderUiState = viewModel.boulderUiState.collectAsState()
+    val topoUiState = viewModel.topoUiState.collectAsState()
+
     var actualMonthNumber = boulderIndex + 1
     val pagerState = rememberPagerState(
         initialPage = boulderIndex,
@@ -55,12 +58,18 @@ fun BoulderDetailsScreen(
 
             val boulders = (boulderUiState.value as BoulderUiState.Success).boulders
             actualMonthNumber = boulders.count()
+
+            LaunchedEffect(pagerState.currentPage) {
+                viewModel.fetchTopos(boulders[pagerState.currentPage].id)
+            }
+
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
                 var boulder = boulders[page]
                 BoulderDetailComponent(
+                    toposUiState = topoUiState.value,
                     boulder = boulder,
                     onExitClick = {
                         navController.popBackStack()
