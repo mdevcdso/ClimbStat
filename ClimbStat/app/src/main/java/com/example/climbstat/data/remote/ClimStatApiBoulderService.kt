@@ -6,7 +6,7 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface ClimStatApiBoulderService {
-    @GET("{climbingGym/boulderId}/boulder")
+    @GET("climbingGym/{climbingGymId}/boulder")
     suspend fun fetchBouldersByClimbingGymId(
         @Header("Authorization") userToken: String,
         @Path("climbingGymId") climbingGymId: String

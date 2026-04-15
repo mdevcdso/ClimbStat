@@ -45,6 +45,8 @@ import com.example.climbstat.R
 import com.example.climbstat.domain.usecase.state.ClimbingGymDetailUiState
 import com.example.climbstat.domain.usecase.state.ClimbingGymsUiState
 import com.example.climbstat.presentation.ui.components.ClimbingGymComponents.ClimbingGymInfoCardComponent
+import com.example.climbstat.presentation.ui.components.OnErrorComponent
+import com.example.climbstat.presentation.ui.navigation.Screen
 import com.example.climbstat.presentation.viewModel.ClimbingGymDetailViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymViewModel
 import com.example.climbstat.utils.PointerInputUtils
@@ -69,9 +71,6 @@ fun GymDetailScreen(
         when(climbingGymDetailStateUi.value) {
             is ClimbingGymDetailUiState.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.size(50.dp))
-            }
-            is ClimbingGymDetailUiState.Error -> {
-                Text("Error: ${(climbingGymDetailStateUi.value as ClimbingGymDetailUiState.Error).message}")
             }
             is ClimbingGymDetailUiState.Success -> {
                 val gymInfo = (climbingGymDetailStateUi.value as ClimbingGymDetailUiState.Success).gym
@@ -206,7 +205,7 @@ fun GymDetailScreen(
                                 .padding(8.dp)
                                 .fillMaxWidth(),
                             onClick = {
-
+                                navController.navigate(Screen.Boulder.createRoute(gymInfo.id))
                             }
                         ) {
                             Row {
@@ -226,6 +225,16 @@ fun GymDetailScreen(
                         }
                     }
                 }
+            }
+            is ClimbingGymDetailUiState.Error -> {
+                val message = (climbingGymDetailStateUi.value as ClimbingGymsUiState.Error).message
+                OnErrorComponent(
+                    message = "Une erreur est survenue lors du chargement des infos de salle d'escalade.",
+                    errorMessage = message,
+                    onRetry = {
+                        viewModel.fetchClimbingGymInfo(gymId)
+                    }
+                )
             }
         }
     }

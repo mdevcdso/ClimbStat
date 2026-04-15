@@ -40,21 +40,26 @@ fun HeaderComponent(title: String, iconScreen: Int, iconButton: Int?, modifier: 
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
-        IconButton(
+        Box(
             modifier = Modifier
-                .weight(1f)
-                .padding(8.dp),
-            onClick = {
-                onclick()
-            }) {
-            iconButton?.let { it ->
-                Icon(
-                    painter = painterResource(id = it),
-                    contentDescription = "Icon Button",
-                    modifier = Modifier.size(50.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+             .weight(1f)
+        ){
         }
+//        IconButton(
+//            modifier = Modifier
+//                .weight(1f)
+//                .padding(8.dp),
+//            onClick = {
+//                onclick()
+//            }) {
+//            iconButton?.let { it ->
+//                Icon(
+//                    painter = painterResource(id = it),
+//                    contentDescription = "Icon Button",
+//                    modifier = Modifier.size(50.dp),
+//                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+//                )
+//            }
+//        }
     }
 }

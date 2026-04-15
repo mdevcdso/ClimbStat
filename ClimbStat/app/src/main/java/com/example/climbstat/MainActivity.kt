@@ -12,12 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.climbstat.data.datasource.remote.RemoteBoulderDataSource
 import com.example.climbstat.data.datasource.remote.RemoteClimbingGymDataSource
 import com.example.climbstat.data.datasource.remote.RemoteUserDataSource
 import com.example.climbstat.data.remote.ClimbStatApiClient
 import com.example.climbstat.data.repository.AuthRepositoryImpl
+import com.example.climbstat.data.repository.BoulderRepositoryImpl
 import com.example.climbstat.data.repository.ClimbingGymRepositoryImpl
+import com.example.climbstat.domain.repository.BoulderRepository
 import com.example.climbstat.domain.repository.ClimbingGymRepository
+import com.example.climbstat.domain.usecase.FetchBoulderUseCase
 import com.example.climbstat.domain.usecase.FetchClimbingGymByIdUseCase
 import com.example.climbstat.domain.usecase.FetchClimbingGymUseCase
 import com.example.climbstat.domain.usecase.LoginUseCase
@@ -28,6 +32,7 @@ import com.example.climbstat.presentation.ui.navigation.composable.BottomNavigat
 import com.example.climbstat.presentation.ui.theme.ClimbStatTheme
 import com.example.climbstat.presentation.viewModel.AppViewModel
 import com.example.climbstat.presentation.viewModel.AuthViewModel
+import com.example.climbstat.presentation.viewModel.BoulderViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymDetailViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymViewModel
 import com.example.climbstat.utils.TokenManagerUtils
@@ -38,6 +43,7 @@ class MainActivity : ComponentActivity() {
     lateinit var registerUseCase: RegisterUseCase
     lateinit var fetchClimbingGymsUseCase: FetchClimbingGymUseCase
     lateinit var fetchClimbingGymsByIdUseCase: FetchClimbingGymByIdUseCase
+    lateinit var fetchBoulderUseCase: FetchBoulderUseCase
 
     private lateinit var appViewModels: AppViewModel
 
@@ -70,15 +76,23 @@ class MainActivity : ComponentActivity() {
                 ),
                 tokenManager = tokenManager
         )
+        val boulderRepository = BoulderRepositoryImpl(
+            remote = RemoteBoulderDataSource(
+                ClimbStatApiClient.boulderApiService
+            ),
+            tokenManager = tokenManager
+        )
         loginUseCase = LoginUseCase(authRepository)
         registerUseCase = RegisterUseCase(authRepository)
         fetchClimbingGymsUseCase = FetchClimbingGymUseCase(climbingGymRepository)
         fetchClimbingGymsByIdUseCase = FetchClimbingGymByIdUseCase(climbingGymRepository)
+        fetchBoulderUseCase = FetchBoulderUseCase(boulderRepository)
 
         return AppViewModel(
             authViewModel = AuthViewModel(loginUseCase, registerUseCase),
             climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase),
-            climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase)
+            climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase),
+            boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase)
         )
     }
 }

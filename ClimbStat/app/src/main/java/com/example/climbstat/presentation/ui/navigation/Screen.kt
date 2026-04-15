@@ -41,10 +41,12 @@ sealed class Screen(
         fun createRoute(gymId: String) = "gymDetail/$gymId"
     }
     object Boulder: Screen(
-        route = "boulder",
+        route = "boulder/{gymId}",
         label = "Blocs",
         icon = R.drawable.picture_frame_svgrepo_com
-    )
+    ){
+        fun createRoute(gymId: String?) = "boulder/$gymId"
+    }
     object Topo: Screen(
         route = "topo",
         label = "Topo",
