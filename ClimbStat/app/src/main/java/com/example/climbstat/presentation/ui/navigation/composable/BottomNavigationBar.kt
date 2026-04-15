@@ -1,5 +1,6 @@
 package com.example.climbstat.presentation.ui.navigation.composable
 
+import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,7 +23,6 @@ import com.example.climbstat.presentation.ui.navigation.Screen
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(Screen.Home, Screen.Gym, Screen.Boulder, Screen.Topo, Screen.Profile)
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-
     if (currentRoute == Screen.Login.route) return
 
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
@@ -31,9 +31,12 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        popUpTo(Screen.Gym.route) {
+                            inclusive = true
+                            saveState = false
+                        }
                         launchSingleTop = true
-                        restoreState = true
+                        restoreState = false
                     }
                 },
                 icon = {
@@ -47,3 +50,4 @@ fun BottomNavigationBar(navController: NavController) {
         }
     }
 }
+
