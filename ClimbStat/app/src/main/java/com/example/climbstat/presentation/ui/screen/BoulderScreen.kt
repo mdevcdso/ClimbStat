@@ -65,10 +65,12 @@ fun BoulderScreen(
     val isSelectDown = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        if(gymId != null && gymId != "{gymId}") {
-            viewModel.fetchClimbingGymInfo(gymId)
-        } else {
-            viewModel.fetchClimbingGymInfo()
+        if(climbingGymUiState.value !is ClimbingGymsUiState.Success) {
+            if (gymId != null && gymId != "{gymId}") {
+                viewModel.fetchClimbingGymInfo(gymId)
+            } else {
+                viewModel.fetchClimbingGymInfo()
+            }
         }
     }
 
