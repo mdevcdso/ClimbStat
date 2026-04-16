@@ -1,7 +1,6 @@
 package com.example.climbstat.data.repository
 
 import com.example.climbstat.data.datasource.remote.RemoteUserDataSource
-import com.example.climbstat.data.remote.auth.RegisterRequest
 import com.example.climbstat.domain.model.User
 import com.example.climbstat.domain.repository.AuthRepository
 import com.example.climbstat.utils.TokenManagerUtils
@@ -14,7 +13,7 @@ class AuthRepositoryImpl(
         val loginResult = remote.login(email, password)
         return if (loginResult.isSuccess) {
             val user = loginResult.getOrThrow()
-            tokenManager.saveToken(user.token)
+            tokenManager.saveUserInfo(user.token, user.id)
             Result.success(user)
         } else {
             Result.failure(Exception("Login failed : ${loginResult.exceptionOrNull()?.message}"))
@@ -25,7 +24,7 @@ class AuthRepositoryImpl(
         val registerResult = remote.register(name, email, password)
         return if (registerResult.isSuccess) {
             val user = registerResult.getOrThrow()
-            tokenManager.saveToken(user.token)
+            tokenManager.saveUserInfo(user.token, user.id)
             Result.success(user)
         } else {
             Result.failure(Exception("Register failed : ${registerResult.exceptionOrNull()?.message}"))

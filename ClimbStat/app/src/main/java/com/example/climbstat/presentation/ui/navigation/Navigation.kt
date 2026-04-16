@@ -35,7 +35,7 @@ fun AppNavigation(
             HomeScreen()
         }
         composable(route = Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(navController = navController)
         }
         composable(route = Screen.Gym.route) {
             GymScreen(viewModel = viewModels.climbingGymsViewModel, navController = navController)
