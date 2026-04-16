@@ -23,6 +23,9 @@ export class Topo{
 
     @Prop({required: true})
     nbAttempts: number;
+
+    @Prop({required: true})
+    comment: string;
 }
 
 export const TopoSchema = SchemaFactory.createForClass(Topo)

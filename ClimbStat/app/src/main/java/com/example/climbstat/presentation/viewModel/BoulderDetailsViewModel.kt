@@ -59,6 +59,7 @@ class BoulderDetailsViewModel(
             val addTopoRequest = AddTopoRequest(
                 isFlash = isFlash,
                 nbAttempts = nbAttempts,
+                comment = comment
             )
             val result = addTopoUseCase(boulderId, addTopoRequest)
             if(result != null){

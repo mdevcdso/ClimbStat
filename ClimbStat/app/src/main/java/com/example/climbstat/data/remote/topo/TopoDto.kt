@@ -13,7 +13,8 @@ data class TopoDto(
     val nbAttempts: Int,
     val updatedAt: String,
     @SerializedName("__v")
-    val v: Int
+    val v: Int,
+    val comment: String?
 )
 
 fun TopoDto.toDomainModel(): Topo = Topo(
@@ -23,5 +24,6 @@ fun TopoDto.toDomainModel(): Topo = Topo(
     userId = this.idUser.id,
     userName = this.idUser.name,
     isFlash = this.isFlash,
-    nbAttempts = this.nbAttempts
+    nbAttempts = this.nbAttempts,
+    comment = this.comment ?: ""
 )

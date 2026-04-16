@@ -1,6 +1,7 @@
 package com.example.climbstat.data.remote.topo
 
 import com.google.gson.annotations.SerializedName
+import org.w3c.dom.Comment
 
 data class AddTopoResponse(
     @SerializedName("__v")
@@ -12,5 +13,6 @@ data class AddTopoResponse(
     val idUser: String,
     val isFlash: Boolean,
     val nbAttempts: Int,
-    val updatedAt: String
+    val updatedAt: String,
+    val comment: String
 )

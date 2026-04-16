@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsNumber } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class TopoDto{
     @IsNotEmpty()
@@ -8,4 +8,8 @@ export class TopoDto{
     @IsNotEmpty()
     @IsNumber()
     nbAttempts: number;
+    
+    @IsNotEmpty()
+    @IsString()
+    comment: string;
 }
