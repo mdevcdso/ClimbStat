@@ -31,7 +31,7 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        popUpTo(Screen.Gym.route) {
+                        popUpTo(Screen.Home.route) {
                             inclusive = true
                             saveState = false
                         }
