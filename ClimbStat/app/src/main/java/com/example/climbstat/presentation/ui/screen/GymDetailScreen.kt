@@ -45,6 +45,7 @@ import com.example.climbstat.R
 import com.example.climbstat.domain.usecase.state.ClimbingGymDetailUiState
 import com.example.climbstat.domain.usecase.state.ClimbingGymsUiState
 import com.example.climbstat.presentation.ui.components.ClimbingGymComponents.ClimbingGymInfoCardComponent
+import com.example.climbstat.presentation.ui.components.DescriptionComponent
 import com.example.climbstat.presentation.ui.components.OnErrorComponent
 import com.example.climbstat.presentation.ui.navigation.Screen
 import com.example.climbstat.presentation.viewModel.ClimbingGymDetailViewModel
@@ -164,41 +165,14 @@ fun GymDetailScreen(
                             )
                         }
                         ClimbingGymInfoCardComponent(gymInfo)
-                        Text(
+
+                        DescriptionComponent(
                             modifier = Modifier
                                 .padding(16.dp)
                                 .fillMaxWidth(),
-                            text = gymInfo.description,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Start
+                            description = gymInfo.description,
+                            tags = gymInfo.tags
                         )
-
-                        FlowRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                        ) {
-                            gymInfo.tags.forEach { tag ->
-                                Card(
-                                    modifier = Modifier
-                                        .padding(end = 8.dp, bottom = 6.dp),
-                                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceVariant)
-                                ) {
-                                    Row(
-                                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            text = tag,
-                                            fontSize = 15.sp,
-                                            modifier = Modifier
-                                        )
-                                    }
-                                }
-                            }
-                        }
 
                         Button(
                             modifier = Modifier

@@ -3,7 +3,6 @@ package com.example.climbstat.presentation.ui.components.boulderComponents
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,9 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,15 +21,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.climbstat.R
 import com.example.climbstat.domain.model.Boulder
-import com.example.climbstat.domain.model.Topo
 import com.example.climbstat.domain.usecase.state.ToposUiState
-import com.example.climbstat.presentation.ui.components.toposComponents.BoulderToposListComponent
+import com.example.climbstat.presentation.ui.components.DescriptionComponent
+import com.example.climbstat.presentation.ui.components.toposComponents.BoulderRankingListComponent
 
 @Composable
 fun BoulderDetailComponent(
@@ -106,30 +101,7 @@ fun BoulderDetailComponent(
                     )
                 }
             }
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                boulder.types.forEach { tag ->
-                    Card(
-                        modifier = Modifier
-                            .padding(end = 8.dp, bottom = 6.dp),
-                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceVariant)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = tag,
-                                fontSize = 15.sp,
-                                modifier = Modifier
-                            )
-                        }
-                    }
-                }
-            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -153,26 +125,13 @@ fun BoulderDetailComponent(
                 )
             }
 
-            Column(
+            DescriptionComponent(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth(),
-            ){
-                Text(
-                    text = "Description",
-                    color = MaterialTheme.colorScheme.outlineVariant,
-                    fontSize = 16.sp,
-                    lineHeight = 16.sp
-                )
-                Text(
-                    modifier = Modifier,
-                    text = boulder.description,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Start
-                )
-            }
+                description = boulder.description,
+                tags = boulder.types
+            )
 
             Column(
                 modifier = Modifier
@@ -202,7 +161,7 @@ fun BoulderDetailComponent(
                     thickness = 2.dp,
                     color = MaterialTheme.colorScheme.outlineVariant
                 )
-                BoulderToposListComponent(
+                BoulderRankingListComponent(
                     modifier = Modifier
                         .fillMaxWidth(),
                     toposUiState = toposUiState

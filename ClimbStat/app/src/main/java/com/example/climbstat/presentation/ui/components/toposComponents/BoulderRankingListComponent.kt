@@ -1,15 +1,11 @@
 package com.example.climbstat.presentation.ui.components.toposComponents
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -27,7 +23,7 @@ import com.example.climbstat.R
 import com.example.climbstat.domain.usecase.state.ToposUiState
 
 @Composable
-fun BoulderToposListComponent(
+fun BoulderRankingListComponent(
     modifier: Modifier,
     toposUiState: ToposUiState
 ) {
@@ -64,6 +60,7 @@ fun BoulderToposListComponent(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
                                 if (index < 3) {
                                     Text(
@@ -77,8 +74,7 @@ fun BoulderToposListComponent(
                                 }
                                 Text(
                                     text = topo.userName,
-                                    fontSize = 20.sp,
-                                    style = MaterialTheme.typography.bodyLarge
+                                    fontSize = 18.sp,
                                 )
                             }
                             if(topo.isFlash) {

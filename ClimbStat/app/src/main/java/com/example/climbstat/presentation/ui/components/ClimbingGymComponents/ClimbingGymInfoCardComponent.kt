@@ -33,7 +33,7 @@ fun ClimbingGymInfoCardComponent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp),
+                    .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Icon(
@@ -55,7 +55,7 @@ fun ClimbingGymInfoCardComponent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                    .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Icon(
