@@ -1,6 +1,9 @@
 package com.example.climbstat.data.remote.topo
 
+import com.google.gson.annotations.SerializedName
+
 data class TopoUserDto(
-    val _id: String,
+    @SerializedName("_id")
+    val id: String,
     val name: String
 )

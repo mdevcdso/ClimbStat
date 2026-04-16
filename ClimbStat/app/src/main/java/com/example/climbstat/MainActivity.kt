@@ -21,6 +21,7 @@ import com.example.climbstat.data.repository.BoulderRepositoryImpl
 import com.example.climbstat.data.repository.ClimbingGymRepositoryImpl
 import com.example.climbstat.domain.repository.BoulderRepository
 import com.example.climbstat.domain.repository.ClimbingGymRepository
+import com.example.climbstat.domain.usecase.AddNewTopoUseCase
 import com.example.climbstat.domain.usecase.FetchBoulderToposUseCase
 import com.example.climbstat.domain.usecase.FetchBoulderUseCase
 import com.example.climbstat.domain.usecase.FetchClimbingGymByIdUseCase
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
     lateinit var fetchClimbingGymsByIdUseCase: FetchClimbingGymByIdUseCase
     lateinit var fetchBoulderUseCase: FetchBoulderUseCase
     lateinit var fetchBoulderToposUseCase: FetchBoulderToposUseCase
+    lateinit var addNewTopoUseCase: AddNewTopoUseCase
 
     private lateinit var appViewModels: AppViewModel
 
@@ -97,13 +99,14 @@ class MainActivity : ComponentActivity() {
         fetchClimbingGymsByIdUseCase = FetchClimbingGymByIdUseCase(climbingGymRepository)
         fetchBoulderUseCase = FetchBoulderUseCase(boulderRepository)
         fetchBoulderToposUseCase = FetchBoulderToposUseCase(topoRepository)
+        addNewTopoUseCase = AddNewTopoUseCase(topoRepository)
 
         return AppViewModel(
             authViewModel = AuthViewModel(loginUseCase, registerUseCase),
             climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase),
             climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase),
             boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase),
-            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase, fetchBoulderToposUseCase)
+            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase, fetchBoulderToposUseCase, addNewTopoUseCase, tokenManager.getUserId() ?: "")
         )
     }
 }

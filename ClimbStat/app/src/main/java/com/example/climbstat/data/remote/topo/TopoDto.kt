@@ -20,6 +20,7 @@ fun TopoDto.toDomainModel(): Topo = Topo(
     id = this.id,
     attemptDate = this.createdAt,
     idBoulder = this.idBoulder,
+    userId = this.idUser.id,
     userName = this.idUser.name,
     isFlash = this.isFlash,
     nbAttempts = this.nbAttempts

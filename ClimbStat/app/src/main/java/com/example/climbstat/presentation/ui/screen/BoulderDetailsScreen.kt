@@ -34,6 +34,7 @@ fun BoulderDetailsScreen(
 ) {
     val boulderUiState = viewModel.boulderUiState.collectAsState()
     val topoUiState = viewModel.topoUiState.collectAsState()
+    val isUserTopBoulder = viewModel.isUserTopBoulder.collectAsState()
 
     var actualMonthNumber = boulderIndex + 1
     val pagerState = rememberPagerState(
@@ -71,14 +72,14 @@ fun BoulderDetailsScreen(
                 BoulderDetailComponent(
                     toposUiState = topoUiState.value,
                     boulder = boulder,
+                    isUserTopBoulder = isUserTopBoulder.value,
                     onExitClick = {
                         navController.popBackStack()
                     },
-                    onFlashClick = {
+                    onTopClick = { nbAttemptString, comment ->
+                        val nbAttempt = nbAttemptString.toIntOrNull() ?: 0
 
-                    },
-                    onTopClick = {
-
+                        viewModel.addTopo(boulder.id, nbAttempts = nbAttempt, comment = comment)
                     }
                 )
             }

@@ -1,26 +1,37 @@
 package com.example.climbstat.presentation.ui.components.boulderComponents
 
+import android.R.bool
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -29,15 +40,22 @@ import com.example.climbstat.domain.model.Boulder
 import com.example.climbstat.domain.usecase.state.ToposUiState
 import com.example.climbstat.presentation.ui.components.DescriptionComponent
 import com.example.climbstat.presentation.ui.components.toposComponents.BoulderRankingListComponent
+import com.example.climbstat.presentation.ui.components.toposComponents.NewTopAlertDialogComponent
+import com.example.climbstat.presentation.ui.components.toposComponents.ValidBoulderComponent
 
 @Composable
 fun BoulderDetailComponent(
     toposUiState: ToposUiState,
     boulder: Boulder,
+    isUserTopBoulder: Boolean,
     onExitClick: () -> Unit,
-    onFlashClick: (String) -> Unit,
-    onTopClick: (String) -> Unit,
+    onTopClick: (String, String) -> Unit,
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+    var isFlash by remember { mutableStateOf(false) }
+    var nbAttemptInputText by remember { mutableStateOf("1") }
+    var commentInputText by remember { mutableStateOf("") }
+
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -101,29 +119,16 @@ fun BoulderDetailComponent(
                     )
                 }
             }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                BoulderDetailTopoComponent(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(8.dp),
-                    text = "Top",
-                    icon = R.drawable.check_circle_svgrepo_com,
-                    onClick = { onTopClick(boulder.id) }
-                )
-                BoulderDetailTopoComponent(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(8.dp),
-                    text = "Flash",
-                    icon = R.drawable.flash_circle_2_svgrepo_com,
-                    onClick = { onTopClick(boulder.id) }
-                )
-            }
+            ValidBoulderComponent(
+                isUserTopBoulder = isUserTopBoulder,
+                onFlashClick = {
+                    isFlash = true
+                    showDialog = true
+                },
+                onTopClick = {
+                    showDialog = true
+                }
+            )
 
             DescriptionComponent(
                 modifier = Modifier
@@ -179,5 +184,31 @@ fun BoulderDetailComponent(
                     onClick = { onExitClick() }
                 )
         )
+        if (showDialog) {
+            NewTopAlertDialogComponent(
+                isFlash = isFlash,
+                nbAttemptInputText = nbAttemptInputText,
+                commentInputText = commentInputText,
+                onNbAttemptChange = { nbAttemptInputText = it },
+                onCommentChange = { commentInputText = it },
+                onConfirm = {
+                    val nbAttempt = nbAttemptInputText
+                    if(isFlash) {
+                        nbAttemptInputText = "1"
+                    }
+                    onTopClick(nbAttempt,commentInputText)
+                    showDialog = false
+                    isFlash = false
+                    nbAttemptInputText = ""
+                    commentInputText = ""
+                },
+                onDismiss = {
+                    showDialog = false
+                    isFlash = false
+                    nbAttemptInputText = ""
+                    commentInputText = ""
+                }
+            )
+        }
     }
 }
