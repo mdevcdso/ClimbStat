@@ -13,7 +13,7 @@ class AuthRepositoryImpl(
         val loginResult = remote.login(email, password)
         return if (loginResult.isSuccess) {
             val user = loginResult.getOrThrow()
-            tokenManager.saveUserInfo(user.token, user.id)
+            tokenManager.saveUserInfo(user.token, user.id, user.name)
             Result.success(user)
         } else {
             Result.failure(Exception("Login failed : ${loginResult.exceptionOrNull()?.message}"))
@@ -24,7 +24,7 @@ class AuthRepositoryImpl(
         val registerResult = remote.register(name, email, password)
         return if (registerResult.isSuccess) {
             val user = registerResult.getOrThrow()
-            tokenManager.saveUserInfo(user.token, user.id)
+            tokenManager.saveUserInfo(user.token, user.id, user.name)
             Result.success(user)
         } else {
             Result.failure(Exception("Register failed : ${registerResult.exceptionOrNull()?.message}"))
