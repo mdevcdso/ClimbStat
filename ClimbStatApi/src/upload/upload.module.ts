@@ -13,7 +13,7 @@ import { extname } from 'path';
                     cb(null, uniqueName);
                 },
             }),
-            limits: { fileSize: 5 * 1024 * 1024 },
+            limits: { fileSize: 15 * 1024 * 1024 },
             fileFilter: (req, file, cb) => {
                 if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
                     return cb(new Error('Seulement les images sont autorisées'), false);
