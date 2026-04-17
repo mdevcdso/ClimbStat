@@ -1,8 +1,12 @@
 # Nestjs specific
-/dist
+**/dist
 /node_modules
 /build
 /tmp
+
+# IDE
+.idea/
+*.iml
 
 # Logs
 logs
