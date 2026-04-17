@@ -6,7 +6,9 @@ import { UserRole } from "./enums/user-role.enum";
 import { Get, Post, Body } from "@nestjs/common";
 import { Roles } from "src/auth/decorators/roles.decorator";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
+@ApiBearerAuth()
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {

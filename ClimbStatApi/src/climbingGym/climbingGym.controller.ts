@@ -8,9 +8,10 @@ import { UpdateClimbingGymDto } from "./dto/updateClimbingGym.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { BoulderDto } from "src/boulder/dto/boulder.dto";
 import { BoulderService } from "src/boulder/boulder.service";
-import { ApiBody } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
 
 
+@ApiBearerAuth()
 @Controller('climbingGym')
 export class ClimbingGymController {
     constructor(
