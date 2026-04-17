@@ -11,6 +11,7 @@ class TokenManagerUtils(context: Context) {
         private const val PREFS_NAME = "auth_prefs"
         private const val KEY_TOKEN = "auth_token"
         private const val KEY_USER_ID = "user_id"
+        private const val KEY_USER_NAME = "user_name"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(
@@ -18,10 +19,11 @@ class TokenManagerUtils(context: Context) {
         Context.MODE_PRIVATE
     )
 
-    fun saveUserInfo(token: String, userId: String) {
+    fun saveUserInfo(token: String, userId: String, userName: String) {
         prefs.edit {
             putString(KEY_TOKEN, token)
             putString(KEY_USER_ID, userId)
+            putString(KEY_USER_NAME, userName)
         }
     }
 
@@ -33,12 +35,20 @@ class TokenManagerUtils(context: Context) {
         return prefs.getString(KEY_USER_ID, null)
     }
 
+    fun getUserName(): String? {
+        return prefs.getString(KEY_USER_NAME, null)
+    }
+
     fun hasToken(): Boolean {
         val token = getToken()
         return !token.isNullOrBlank()
     }
 
     fun clearToken() {
-        prefs.edit { remove(KEY_TOKEN) }
+        prefs.edit {
+            remove(KEY_TOKEN)
+            remove(KEY_USER_ID)
+            remove(KEY_USER_NAME)
+        }
     }
 }
