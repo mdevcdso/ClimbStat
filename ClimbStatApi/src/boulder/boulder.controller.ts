@@ -7,9 +7,10 @@ import { Roles } from "src/auth/decorators/roles.decorator";
 import { UserRole } from "src/users/enums/user-role.enum";
 import { TopoService } from "src/topo/topo.services";
 import { TopoDto } from "src/topo/dto/topo.dto";
-import { ApiBody } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
 
 
+@ApiBearerAuth()
 @Controller('boulder')
 export class BoulderController{
     constructor(
