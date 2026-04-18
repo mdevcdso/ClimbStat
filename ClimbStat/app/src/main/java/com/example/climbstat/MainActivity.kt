@@ -38,6 +38,7 @@ import com.example.climbstat.presentation.viewModel.BoulderDetailsViewModel
 import com.example.climbstat.presentation.viewModel.BoulderViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymDetailViewModel
 import com.example.climbstat.presentation.viewModel.ClimbingGymViewModel
+import com.example.climbstat.presentation.viewModel.ProfileViewModel
 import com.example.climbstat.utils.TokenManagerUtils
 
 class MainActivity : ComponentActivity() {
@@ -106,7 +107,8 @@ class MainActivity : ComponentActivity() {
             climbingGymsViewModel = ClimbingGymViewModel(fetchClimbingGymsUseCase),
             climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase),
             boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase),
-            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase, fetchBoulderToposUseCase, addNewTopoUseCase, tokenManager.getUserId() ?: "")
+            boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase, fetchBoulderToposUseCase, addNewTopoUseCase, tokenManager.getUserId() ?: ""),
+            profileViewModel = ProfileViewModel(tokenManager)
         )
     }
 }
