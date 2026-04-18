@@ -43,6 +43,12 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import com.example.climbstat.domain.model.ClimbingGym
+
 
 
 @Composable
@@ -72,6 +78,7 @@ fun ProfileScreen(
             userName = state.userName,
             sessionsCount = state.sessionsCount,
             topsByTier = state.topsByTier,
+            visitedGyms = state.visitedGyms,
             onLogout = {
                 viewModel.logout()
                 navController.navigate(Screen.Login.route) {
@@ -101,6 +108,7 @@ private fun ProfileContent(
     userName: String,
     sessionsCount: Int,
     topsByTier: Map<DifficultyTier, Int>,
+    visitedGyms: List<ClimbingGym>,
     onLogout: () -> Unit
 ) {
     Column(
@@ -122,6 +130,10 @@ private fun ProfileContent(
         SessionsCounter(count = sessionsCount)
         Spacer(modifier = Modifier.height(32.dp))
         TopsByTierSection(topsByTier = topsByTier)
+        if (visitedGyms.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(32.dp))
+            VisitedGymsSection(gyms = visitedGyms)
+        }
         Spacer(modifier = Modifier.weight(1f))
         Button(
             onClick = onLogout,
@@ -228,6 +240,42 @@ private fun TierBar(
     }
 }
 
+@Composable
+private fun VisitedGymsSection(gyms: List<ClimbingGym>) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "Salles visitées",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(bottom = 12.dp)
+        )
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(gyms) { gym ->
+                GymChip(name = gym.name)
+            }
+        }
+    }
+}
+
+@Composable
+private fun GymChip(name: String) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFE8ECF6)
+        )
+    ) {
+        Text(
+            text = name,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color(0xFF17181C),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+    }
+}
 
 @Composable
 private fun ProfileAvatar() {
