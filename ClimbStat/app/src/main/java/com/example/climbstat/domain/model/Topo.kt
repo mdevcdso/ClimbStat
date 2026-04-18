@@ -7,6 +7,7 @@ data class Topo(
     val attemptDate: String,
     val idBoulder: String,
     val boulderDifficulty: String?,
+    val boulderGymId: String?,
     val isFlash: Boolean,
     val nbAttempts: Int,
     val comment: String

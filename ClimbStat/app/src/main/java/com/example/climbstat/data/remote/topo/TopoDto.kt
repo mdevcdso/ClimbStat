@@ -22,6 +22,7 @@ fun TopoDto.toDomainModel(): Topo = Topo(
     attemptDate = this.createdAt,
     idBoulder = this.idBoulder,
     boulderDifficulty = null,
+    boulderGymId = null,
     userId = this.idUser.id,
     userName = this.idUser.name,
     isFlash = this.isFlash,
@@ -35,7 +36,8 @@ data class TopoBoulderDto(
     val types: List<String>,
     val description: String,
     val image: String,
-    val videoBeta: String?
+    val videoBeta: String?,
+    val idGym: String
 )
 
 data class UserTopoDto(
@@ -57,6 +59,7 @@ fun UserTopoDto.toDomainModel(): Topo = Topo(
     attemptDate = this.createdAt,
     idBoulder = this.idBoulder.id,
     boulderDifficulty = this.idBoulder.difficulty,
+    boulderGymId = this.idBoulder.idGym,
     userId = this.idUser,
     userName = "",
     isFlash = this.isFlash,
