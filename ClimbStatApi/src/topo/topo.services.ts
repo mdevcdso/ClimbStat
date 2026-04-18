@@ -38,7 +38,7 @@ export class TopoService{
             {idUser}).
             populate(
                 'idBoulder',
-                '_id difficulty types description image videoBeta'
+                '_id difficulty types description image videoBeta idGym'
             )
         .exec()
 
