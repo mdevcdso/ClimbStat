@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
             climbingGymDetailViewModel = ClimbingGymDetailViewModel(fetchClimbingGymsByIdUseCase),
             boulderViewModel = BoulderViewModel(fetchBoulderUseCase, fetchClimbingGymsUseCase),
             boulderDetailsViewModel = BoulderDetailsViewModel(fetchBoulderUseCase, fetchBoulderToposUseCase, addNewTopoUseCase, tokenManager.getUserId() ?: ""),
-            profileViewModel = ProfileViewModel(tokenManager)
+            profileViewModel = ProfileViewModel(tokenManager, topoRepository)
         )
     }
 }
