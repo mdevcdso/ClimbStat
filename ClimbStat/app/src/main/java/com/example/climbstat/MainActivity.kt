@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ClimbStatTheme {
-                val start = if (tokenManager.hasToken()) Screen.Home.route else Screen.Login.route
+                val start = if (tokenManager.hasToken()) Screen.Profile.route else Screen.Login.route
                 MainContent(appViewModels, start)
             }
         }

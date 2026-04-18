@@ -82,7 +82,7 @@ fun ProfileScreen(
             onLogout = {
                 viewModel.logout()
                 navController.navigate(Screen.Login.route) {
-                    popUpTo(Screen.Home.route) { inclusive = true }
+                    popUpTo(Screen.Profile.route) { inclusive = true }
                 }
             }
         )

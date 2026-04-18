@@ -10,7 +10,6 @@ import com.example.climbstat.presentation.ui.screen.BoulderDetailsScreen
 import com.example.climbstat.presentation.ui.screen.BoulderScreen
 import com.example.climbstat.presentation.ui.screen.GymDetailScreen
 import com.example.climbstat.presentation.ui.screen.GymScreen
-import com.example.climbstat.presentation.ui.screen.HomeScreen
 import com.example.climbstat.presentation.ui.screen.LoginScreen
 import com.example.climbstat.presentation.ui.screen.ProfileScreen
 import com.example.climbstat.presentation.ui.screen.TopoScreen
@@ -30,9 +29,6 @@ fun AppNavigation(
     ) {
         composable(route = Screen.Login.route) {
             LoginScreen(viewModel = viewModels.authViewModel, navController = navController)
-        }
-        composable(route = Screen.Home.route) {
-            HomeScreen()
         }
         composable(route = Screen.Profile.route) {
             ProfileScreen(viewModel = viewModels.profileViewModel, navController = navController)

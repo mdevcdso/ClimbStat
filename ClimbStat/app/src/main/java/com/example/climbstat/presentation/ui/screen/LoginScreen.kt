@@ -60,7 +60,7 @@ fun LoginScreen(
                 viewModel.resetUiState()
             }
             is AuthUiState.Success -> {
-                navController.navigate(Screen.Home.route) {
+                navController.navigate(Screen.Profile.route) {
                     popUpTo(Screen.Login.route) { inclusive = true }
                 }
             }
