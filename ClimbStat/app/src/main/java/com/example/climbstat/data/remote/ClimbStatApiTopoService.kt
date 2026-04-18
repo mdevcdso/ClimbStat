@@ -3,6 +3,7 @@ package com.example.climbstat.data.remote
 import com.example.climbstat.data.remote.topo.AddTopoRequest
 import com.example.climbstat.data.remote.topo.AddTopoResponse
 import com.example.climbstat.data.remote.topo.TopoDto
+import com.example.climbstat.data.remote.topo.UserTopoDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -13,7 +14,7 @@ interface ClimbStatApiTopoService {
     @GET("topo/me")
     suspend fun getMyTopos(
         @Header("Authorization") userToken: String,
-    ): List<TopoDto>
+    ): List<UserTopoDto>
 
     @GET("boulder/{boulderId}/topo")
     suspend fun getToposByBoulderId(
