@@ -24,7 +24,7 @@ export class Topo{
     @Prop({required: true})
     nbAttempts: number;
 
-    @Prop({required: true})
+    @Prop({required: false})
     comment: string;
 }
 
