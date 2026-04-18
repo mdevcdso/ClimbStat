@@ -18,11 +18,6 @@ sealed class Screen(
         label = "Register",
         icon = R.drawable.ic_launcher_foreground
     )
-    object Home: Screen(
-        route = "home",
-        label = "Home",
-        icon = R.drawable.home_svgrepo_com
-    )
     object Profile: Screen(
         route = "profile",
         label = "Profile",

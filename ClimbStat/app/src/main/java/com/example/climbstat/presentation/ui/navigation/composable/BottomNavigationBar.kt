@@ -21,7 +21,7 @@ import com.example.climbstat.presentation.ui.navigation.Screen
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    val items = listOf(Screen.Home, Screen.Gym, Screen.Boulder, Screen.Topo, Screen.Profile)
+    val items = listOf(Screen.Gym, Screen.Boulder, Screen.Topo, Screen.Profile)
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     if (currentRoute == Screen.Login.route) return
 
@@ -31,7 +31,7 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        popUpTo(Screen.Home.route) {
+                        popUpTo(Screen.Profile.route) {
                             inclusive = true
                             saveState = false
                         }
