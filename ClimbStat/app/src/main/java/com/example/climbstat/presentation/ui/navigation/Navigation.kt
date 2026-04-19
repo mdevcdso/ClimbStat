@@ -73,7 +73,7 @@ fun AppNavigation(
             )
         }
         composable(route = Screen.Topo.route) {
-            TopoScreen()
+            TopoScreen(viewModel = viewModels.topoViewModel)
         }
     }
 }
