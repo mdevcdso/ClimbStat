@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.climbstat.data.datasource.remote.RemoteBoulderDataSource
 import com.example.climbstat.data.datasource.remote.RemoteClimbingGymDataSource
 import com.example.climbstat.data.datasource.remote.RemoteUserDataSource
+import com.example.climbstat.data.local.AppDatabase
+import com.example.climbstat.data.local.DatabaseProvider
 import com.example.climbstat.data.remote.ClimbStatApiClient
 import com.example.climbstat.data.repository.AuthRepositoryImpl
 import com.example.climbstat.data.repository.BoulderRepositoryImpl
@@ -71,6 +73,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun injectDependencies(tokenManager: TokenManagerUtils): AppViewModel {
+        val database = DatabaseProvider.getDatabase(applicationContext)
+        val climbingGymDao = database.climbingGymDao()
+
         val authRepository = AuthRepositoryImpl(
             remote = RemoteUserDataSource(
                 ClimbStatApiClient.authApiService
@@ -81,7 +86,8 @@ class MainActivity : ComponentActivity() {
                 remote = RemoteClimbingGymDataSource(
                     ClimbStatApiClient.gymApiService
                 ),
-                tokenManager = tokenManager
+                tokenManager = tokenManager,
+                local = climbingGymDao
         )
         val boulderRepository = BoulderRepositoryImpl(
             remote = RemoteBoulderDataSource(

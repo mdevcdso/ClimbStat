@@ -24,7 +24,7 @@ data class ClimbingGymDto(
 fun ClimbingGymDto.toDomainModel(): ClimbingGym = ClimbingGym(
     id = this.id,
     address = this.address,
-    clossingHours = this.clossingHours,
+    closingHours = this.clossingHours,
     cotationType = this.cotationType,
     createdAt = this.createdAt,
     description = this.description,

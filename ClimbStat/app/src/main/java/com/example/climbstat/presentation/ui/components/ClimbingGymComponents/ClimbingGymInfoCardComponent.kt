@@ -83,7 +83,7 @@ fun ClimbingGymInfoCardComponent(
                     )
                     Text(
                         modifier = Modifier,
-                        text = climbingGym.clossingHours,
+                        text = climbingGym.closingHours,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

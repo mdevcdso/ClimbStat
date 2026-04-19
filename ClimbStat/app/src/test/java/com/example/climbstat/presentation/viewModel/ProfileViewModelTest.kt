@@ -173,7 +173,7 @@ class ProfileViewModelTest {
     private fun gym(id: String) = ClimbingGym(
         id = id,
         address = "",
-        clossingHours = "",
+        closingHours = "",
         cotationType = "",
         createdAt = "",
         description = "",
