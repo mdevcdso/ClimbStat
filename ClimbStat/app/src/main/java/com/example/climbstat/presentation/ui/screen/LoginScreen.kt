@@ -63,6 +63,7 @@ fun LoginScreen(
                 navController.navigate(Screen.Profile.route) {
                     popUpTo(Screen.Login.route) { inclusive = true }
                 }
+                viewModel.resetUiState()
             }
             is AuthUiState.Initial -> {
                 Column(
@@ -168,7 +169,7 @@ fun LoginScreen(
                                 modifier = Modifier
                                     .padding(top = 16.dp)
                                     .clickable{
-                                        //navController.navigate(Screen.Register.route)
+                                        navController.navigate(Screen.Register.route)
                                     },
                                 color = MaterialTheme.colorScheme.primary,
                                 style = MaterialTheme.typography.bodyLarge

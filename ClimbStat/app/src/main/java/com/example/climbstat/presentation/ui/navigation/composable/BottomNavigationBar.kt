@@ -23,7 +23,7 @@ import com.example.climbstat.presentation.ui.navigation.Screen
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(Screen.Gym, Screen.Boulder, Screen.Topo, Screen.Profile)
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-    if (currentRoute == Screen.Login.route) return
+    if (currentRoute == Screen.Login.route || currentRoute == Screen.Register.route) return
 
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
         items.forEach { screen ->

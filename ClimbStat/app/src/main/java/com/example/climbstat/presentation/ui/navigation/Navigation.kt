@@ -14,7 +14,7 @@ import com.example.climbstat.presentation.ui.screen.LoginScreen
 import com.example.climbstat.presentation.ui.screen.ProfileScreen
 import com.example.climbstat.presentation.ui.screen.TopoScreen
 import com.example.climbstat.presentation.viewModel.AppViewModel
-import com.example.climbstat.presentation.viewModel.BoulderDetailsViewModel
+import com.example.climbstat.presentation.ui.screen.RegisterScreen
 
 
 @Composable
@@ -29,6 +29,9 @@ fun AppNavigation(
     ) {
         composable(route = Screen.Login.route) {
             LoginScreen(viewModel = viewModels.authViewModel, navController = navController)
+        }
+        composable(route = Screen.Register.route) {
+            RegisterScreen(viewModel = viewModels.authViewModel, navController = navController)
         }
         composable(route = Screen.Profile.route) {
             ProfileScreen(viewModel = viewModels.profileViewModel, navController = navController)
