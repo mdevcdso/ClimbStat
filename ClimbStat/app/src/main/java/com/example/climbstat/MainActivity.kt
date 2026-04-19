@@ -76,6 +76,7 @@ class MainActivity : ComponentActivity() {
         val database = DatabaseProvider.getDatabase(applicationContext)
         val climbingGymDao = database.climbingGymDao()
         val boulderDao = database.boulderDao()
+        val topoDoa = database.topoDao()
 
         val authRepository = AuthRepositoryImpl(
             remote = RemoteUserDataSource(
@@ -101,7 +102,8 @@ class MainActivity : ComponentActivity() {
             remote = com.example.climbstat.data.datasource.remote.RemoteTopoDataSource(
                 ClimbStatApiClient.topoApiService
             ),
-            tokenManager = tokenManager
+            tokenManager = tokenManager,
+            local = topoDoa
         )
         loginUseCase = LoginUseCase(authRepository)
         registerUseCase = RegisterUseCase(authRepository)
