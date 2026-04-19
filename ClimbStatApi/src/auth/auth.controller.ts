@@ -14,7 +14,7 @@ import { UserSchema } from "src/users/schemas/user.schema";
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @Post()
+    @Post('register')
     @ApiBody({ type: CreateUserDto })
     async register(@Body() CreateUserDto: CreateUserDto) {
         return this.authService.register(CreateUserDto);
