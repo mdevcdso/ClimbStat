@@ -47,7 +47,18 @@ class ClimbingGymRepositoryImpl(
             val climbingGym = fetchResult.getOrThrow()
             Result.success(climbingGym)
         } else {
-            Result.failure(Exception("Failed to fetch climbing gym by id: ${fetchResult.exceptionOrNull()?.message}"))
+            try{
+                val localData = local.getGymById(id)
+                if(localData != null){
+                    val gym = localData.toDomain()
+                    return Result.success(gym)
+                }else{
+                    return Result.failure(Exception("No local data available for gym with id: $id + ${fetchResult.exceptionOrNull()?.message}"))
+                }
+
+            } catch (e: Exception) {
+                Result.failure(Exception("Failed to fetch climbing gym by id: ${fetchResult.exceptionOrNull()?.message}"))
+            }
         }
     }
 }
