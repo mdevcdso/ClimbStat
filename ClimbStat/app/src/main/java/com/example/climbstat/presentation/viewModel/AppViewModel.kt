@@ -6,5 +6,6 @@ data class AppViewModel (
     val climbingGymDetailViewModel: ClimbingGymDetailViewModel,
     val boulderViewModel: BoulderViewModel,
     val boulderDetailsViewModel: BoulderDetailsViewModel,
-    val profileViewModel: ProfileViewModel
+    val profileViewModel: ProfileViewModel,
+    val topoViewModel: TopoViewModel
 )
