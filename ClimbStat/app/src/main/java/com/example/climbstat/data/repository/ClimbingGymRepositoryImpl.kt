@@ -11,7 +11,8 @@ class ClimbingGymRepositoryImpl(
     val remote: RemoteClimbingGymDataSource,
     val tokenManager: TokenManagerUtils
 ): ClimbingGymRepository {
-    val userToken: String = tokenManager.getToken().toString()
+    private val userToken: String
+        get() = tokenManager.getToken().orEmpty()
 
     override suspend fun fetchClimbingGyms(): Result<List<ClimbingGym>> {
         val fetchResult = remote.getClimbingGyms(userToken)

@@ -8,7 +8,8 @@ class BoulderRepositoryImpl (
     val remote: RemoteBoulderDataSource,
     val tokenManager: TokenManagerUtils
 ): BoulderRepository{
-    val userToken: String = tokenManager.getToken().toString()
+    private val userToken: String
+        get() = tokenManager.getToken().orEmpty()
 
     override suspend fun fetchBouldersByGymId(gymId: String): Result<List<com.example.climbstat.domain.model.Boulder>> {
         val fetchResult = remote.getBouldersByClimbingGymId(userToken, gymId)

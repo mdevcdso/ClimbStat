@@ -11,7 +11,8 @@ class TopoRepositoryImpl(
     val remote: RemoteTopoDataSource,
     val tokenManager: TokenManagerUtils
 ): TopoRepository{
-    val userToken: String = tokenManager.getToken().toString()
+    private val userToken: String
+        get() = tokenManager.getToken().orEmpty()
 
     override suspend fun getUserTopos(): Result<List<Topo>> {
         val userTopos = remote.getUserTopos(userToken)
