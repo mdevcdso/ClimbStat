@@ -36,6 +36,7 @@ class ClimbingGymRepositoryImpl(
                     Result.failure(Exception("No local data available + ${fetchResult.exceptionOrNull()?.message}"))
                 }
             } catch (e: Exception) {
+                Log.e("ClimbingGymRepositoryImpl", "Failed to fetch climbing gyms: ${e.message}")
                 Result.failure( Exception("Failed local + remote: ${e.message}"))
             }
         }

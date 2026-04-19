@@ -75,6 +75,7 @@ class MainActivity : ComponentActivity() {
     private fun injectDependencies(tokenManager: TokenManagerUtils): AppViewModel {
         val database = DatabaseProvider.getDatabase(applicationContext)
         val climbingGymDao = database.climbingGymDao()
+        val boulderDao = database.boulderDao()
 
         val authRepository = AuthRepositoryImpl(
             remote = RemoteUserDataSource(
@@ -93,7 +94,8 @@ class MainActivity : ComponentActivity() {
             remote = RemoteBoulderDataSource(
                 ClimbStatApiClient.boulderApiService
             ),
-            tokenManager = tokenManager
+            tokenManager = tokenManager,
+            local = boulderDao
         )
         val topoRepository = com.example.climbstat.data.repository.TopoRepositoryImpl(
             remote = com.example.climbstat.data.datasource.remote.RemoteTopoDataSource(

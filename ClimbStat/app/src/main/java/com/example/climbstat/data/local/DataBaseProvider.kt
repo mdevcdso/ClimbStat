@@ -14,7 +14,9 @@ object DatabaseProvider {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "climb_stat_db"
-            ).build()
+            )
+                //.fallbackToDestructiveMigration()
+                .build()
 
             INSTANCE = instance
             instance
