@@ -146,7 +146,7 @@ fun LoginScreen(
                             }
                         ) {
                             Text(
-                                text = "Connection",
+                                text = "Connexion",
                                 fontSize = 20.sp,
                                 color = MaterialTheme.colorScheme.tertiary,
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
