@@ -1,14 +1,20 @@
 package com.example.climbstat.data.repository
 
 import com.example.climbstat.data.datasource.remote.RemoteTopoDataSource
+import com.example.climbstat.data.local.climbingGym.toDomain
+import com.example.climbstat.data.local.topo.TopoDao
+import com.example.climbstat.data.local.topo.toDomain
+import com.example.climbstat.data.local.topo.toEntity
 import com.example.climbstat.data.remote.topo.AddTopoRequest
 import com.example.climbstat.data.remote.topo.AddTopoResponse
 import com.example.climbstat.domain.model.Topo
 import com.example.climbstat.domain.repository.TopoRepository
 import com.example.climbstat.utils.TokenManagerUtils
+import kotlinx.coroutines.flow.first
 
 class TopoRepositoryImpl(
     val remote: RemoteTopoDataSource,
+    val local: TopoDao,
     val tokenManager: TokenManagerUtils
 ): TopoRepository{
     private val userToken: String
@@ -18,9 +24,21 @@ class TopoRepositoryImpl(
         val userTopos = remote.getUserTopos(userToken)
         return if (userTopos.isSuccess) {
             val topos = userTopos.getOrThrow()
+            topos.forEach { local.insertTopo(it.toEntity()) }
             Result.success(topos)
         } else {
-            Result.failure(Exception("Failed to fetch user topos: ${userTopos.exceptionOrNull()?.message}"))
+            try {
+                val userId = tokenManager.getUserId().orEmpty()
+                val localData = local.getTopoByUserId(userId)
+                val topos = localData.map { it.toDomain() }
+                if (topos.isNotEmpty()) {
+                    Result.success(topos)
+                } else {
+                    Result.failure(Exception("No local data available"))
+                }
+            } catch (e: Exception) {
+                Result.failure(Exception("Failed to fetch user topos: ${e.message}"))
+            }
         }
     }
 
@@ -28,9 +46,20 @@ class TopoRepositoryImpl(
         val boulderTopos = remote.getToposByBoulderId(userToken, boulderId)
         return if (boulderTopos.isSuccess) {
             val topos = boulderTopos.getOrThrow()
+            topos.forEach { local.insertTopo(it.toEntity()) }
             Result.success(topos)
         } else {
-            Result.failure(Exception("Failed to fetch topos for the boulder: ${boulderTopos.exceptionOrNull()?.message}"))
+            try {
+                val localData = local.getTopoByBoulderId(boulderId)
+                val topos = localData.map { it.toDomain() }
+                if (topos.isNotEmpty()) {
+                    Result.success(topos)
+                } else {
+                    Result.failure(Exception("No local data available"))
+                }
+            } catch (e: Exception) {
+                Result.failure(Exception("Failed to fetch topos for the boulder: ${e.message}"))
+            }
         }
     }
 

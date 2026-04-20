@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object ClimbStatApiClient {
     private val BASE_URL = Constants.BASE_URL
-    private val TIMEOUT = 30L
+    private val TIMEOUT = 5L
 
     val httpClient = OkHttpClient.Builder()
         .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
